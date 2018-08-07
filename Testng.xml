@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Testing" verbose="1">
+    <test name="test">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="Fees_New.RunnerFile"/>
+        </classes>
+    </test>
+
+</suite>
