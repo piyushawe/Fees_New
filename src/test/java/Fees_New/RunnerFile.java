@@ -3,10 +3,7 @@ package Fees_New;
 import cucumber.api.CucumberOptions;
 import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 
 /**
@@ -47,5 +44,11 @@ public class RunnerFile
     public void getscen(CucumberFeatureWrapper cf)
    {
        testing.runCucumber(cf.getCucumberFeature());
+   }
+   @AfterClass
+    public void closeBrowser()
+   {
+       App.returnDriver().quit();
+       Utility.desiredWindow=false;
    }
 }

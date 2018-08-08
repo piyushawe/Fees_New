@@ -17,12 +17,12 @@ public class App
     {
        if(Browser.equalsIgnoreCase("chrome"))
        {
-           System.setProperty("webdriver.chrome.driver","E:\\chromedriver_win32\\chromedriver.exe");
+           System.setProperty("webdriver.chrome.driver","D:\\selenium drivers\\chromedriver_win32\\chromedriver.exe");
            web=new ChromeDriver();
        }
        if(Browser.equalsIgnoreCase("firefox"))
        {
-           System.setProperty("webdriver.gecko.driver","E:\\geckodriver-v0.21.0-win64\\geckodriver.exe");
+           System.setProperty("webdriver.gecko.driver","D:\\selenium drivers\\geckodriver-v0.21.0-win64\\geckodriver.exe");
            web=new FirefoxDriver();
        }
 
