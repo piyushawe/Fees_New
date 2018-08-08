@@ -40,5 +40,16 @@ public class Step_Def {
         // Write code here that turns the phrase above into concrete actions
         System.out.println("This is chrome");
     }
+    @Given("^do testing$")
+    public void do_testing() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        
+    }
+
+    @Given("^doing testing$")
+    public void doing_testing() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+
+    }
 
 }
