@@ -1,31 +1,29 @@
-package Fees_New;
+package Cucumber_Execution;
 
+import Webdriver_Support.WebDriverInitialization;
+import Webdriver_Support.Utility;
 import cucumber.api.java.en.Given;
-import gherkin.lexer.Th;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
-
-import java.util.concurrent.TimeUnit;
 
 public class Step_Def {
     @Given("^opening toolsqa$")
     public void opening_toolsqa() throws Throwable {
-        //App.returnDriver().manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
+        //WebDriverInitialization.returnDriver().manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
         // Write code here that turns the phrase above into concrete actions
         System.out.println("This is Background");
-        //App.returnDriver().navigate().to("http://toolsqa.com/automation-practice-form/");
-        App.returnDriver().navigate().to("http://qaerp.franciscanecare.net/Secure/default.aspx");
-        App.returnDriver().findElement(By.id("txtUserName")).sendKeys("admin");
-        App.returnDriver().findElement(By.id("txtPassword")).sendKeys("Admin#franciscan");
+        //WebDriverInitialization.returnDriver().navigate().to("http://toolsqa.com/automation-practice-form/");
+        WebDriverInitialization.returnDriver().navigate().to("http://qaerp.franciscanecare.net/Secure/default.aspx");
+        WebDriverInitialization.returnDriver().findElement(By.id("txtUserName")).sendKeys("admin");
+        WebDriverInitialization.returnDriver().findElement(By.id("txtPassword")).sendKeys("Admin#franciscan");
         Thread.sleep(2000);
-        App.returnDriver().findElement(By.id("btnLogin")).click();
-        //App.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
+        WebDriverInitialization.returnDriver().findElement(By.id("btnLogin")).click();
+        //WebDriverInitialization.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
         Utility.getwindow();
-        if (Utility.desiredWindow) {
+        if (Utility.desiredwindow) {
 
         }else{
             Thread.sleep(4000);
-            App.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
+            WebDriverInitialization.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
         }
     }
 
@@ -43,13 +41,13 @@ public class Step_Def {
     @Given("^do testing$")
     public void do_testing() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        
+        System.out.println("This is Do Testing");
     }
 
     @Given("^doing testing$")
     public void doing_testing() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-
+        System.out.println("This is Doing Testing");
     }
 
 }
