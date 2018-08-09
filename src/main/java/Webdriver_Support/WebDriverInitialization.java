@@ -1,4 +1,4 @@
-package Fees_New;
+package Webdriver_Support;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,9 +8,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * Hello world!
  *
  */
-public class App 
+public class WebDriverInitialization
 {  private static WebDriver web;
-    private App()
+    private WebDriverInitialization()
     {
     }
    static public void intiliazedriver(String Browser)
