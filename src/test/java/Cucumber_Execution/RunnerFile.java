@@ -49,7 +49,7 @@ public class RunnerFile
    }
    @AfterClass
     public void closeBrowser()
-   {/* Need to close window as for different test in testng.xml there is no need of previous windows and for parallel testing
+   {/** Need to close window as for different test in testng.xml there is no need of previous windows and for parallel testing
        if i don't close window then getWindowsHandles method will might provide undesired output
 
        desiredwindow flag is set to false to make sure for every test in testng.xml reset to default flag status

@@ -21,4 +21,12 @@ static public boolean desiredwindow=false;
         }
 
     }
+    static public void takeScreenShot()
+    {
+
+    }
+    static public void excelReading()
+    {
+
+    }
 }
