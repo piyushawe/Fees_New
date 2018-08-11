@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
-<log4j:configuration debug="true" xmlns:log4j="http://jakarta.apache.org/log4j/">
+<log4j:configuration debug="false" xmlns:log4j="http://jakarta.apache.org/log4j/">
     <!--Debug="True" is use to print the log complete information if set "false" then then only messages will print-->
     <!-- console appender -->
     <appender name="console" class="org.apache.log4j.ConsoleAppender">
@@ -21,12 +21,12 @@
         </layout>
     </appender>
     <root>
-        <priority value="DEBUG" /> <!--This is use to set the debugging level -->
+        <priority value="ERROR" /> <!--This is use to set the debugging level -->
         <!-- <appender-ref ref="file" /> This is use to appender reference to particular appender(Line no 16)-->
-        <appender-ref ref="console" /> <!--This is use to appender reference to particular appender(Line no 8)-->
+        <appender-ref ref="file" /> <!--This is use to appender reference to particular appender(Line no 8)-->
     </root>
     <logger name="Error_log" additivity="false">
-        <level value="ERROR"/>
-        <appender-ref ref="file" />
+        <level value="DEBUG"/>
+        <appender-ref ref="console" />
     </logger>
 </log4j:configuration>

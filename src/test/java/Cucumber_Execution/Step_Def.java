@@ -1,5 +1,6 @@
 package Cucumber_Execution;
 
+import Log4jpackage.LoggerClass;
 import Webdriver_Support.WebDriverInitialization;
 import Webdriver_Support.Utility;
 import cucumber.api.java.en.Given;
@@ -10,7 +11,7 @@ public class Step_Def {
     public void opening_toolsqa() throws Throwable {
         //WebDriverInitialization.returnDriver().manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
         // Write code here that turns the phrase above into concrete actions
-        System.out.println("This is Background");
+        LoggerClass.log_info.info("Currently is Background");
         //WebDriverInitialization.returnDriver().navigate().to("http://toolsqa.com/automation-practice-form/");
         WebDriverInitialization.returnDriver().navigate().to("http://qaerp.franciscanecare.net/Secure/default.aspx");
         WebDriverInitialization.returnDriver().findElement(By.id("txtUserName")).sendKeys("admin");
