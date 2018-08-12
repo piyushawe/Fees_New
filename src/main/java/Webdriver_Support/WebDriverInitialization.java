@@ -25,7 +25,7 @@ public class WebDriverInitialization {
         switch (Browser.toLowerCase()) {
             case "chrome": {
                 try{
-                    System.setProperty("webdriver.chrome.driver", "E:\\chromedriver_win32\\chromedriver.exe");
+                    System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver.exe");
                     web = new ChromeDriver();
                     LoggerClass.log_info.debug("Code Currently in browser initialization");
                 }
@@ -38,7 +38,7 @@ public class WebDriverInitialization {
             }
             case "firefox": {
                try {
-                   System.setProperty("webdriver.gecko.driver", "E:\\geckodriver-v0.21.0-win64\\geckodriver.exe");
+                   System.setProperty("webdriver.gecko.driver", "Drivers\\geckodriver.exe");
                    web = new FirefoxDriver();
                    LoggerClass.log_info.debug("Code Currently in browser initialization");
                }catch (IllegalStateException e)
