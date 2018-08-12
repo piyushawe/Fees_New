@@ -11,11 +11,11 @@ public class Step_Def {
     public void opening_toolsqa() throws Throwable {
         //WebDriverInitialization.returnDriver().manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
         // Write code here that turns the phrase above into concrete actions
-        LoggerClass.log_info.info("Currently is Background");
+        LoggerClass.log_info.debug("Currently is Background");
         //WebDriverInitialization.returnDriver().navigate().to("http://toolsqa.com/automation-practice-form/");
-        WebDriverInitialization.returnDriver().navigate().to("http://qaerp.franciscanecare.net/Secure/default.aspx");
-        WebDriverInitialization.returnDriver().findElement(By.id("txtUserName")).sendKeys("admin");
-        WebDriverInitialization.returnDriver().findElement(By.id("txtPassword")).sendKeys("Admin#franciscan");
+        WebDriverInitialization.returnDriver().navigate().to(RunnerFile.global_url);
+        WebDriverInitialization.returnDriver().findElement(By.id("txtUserName")).sendKeys(RunnerFile.global_username);
+        WebDriverInitialization.returnDriver().findElement(By.id("txtPassword")).sendKeys(RunnerFile.global_password);
         Thread.sleep(2000);
         WebDriverInitialization.returnDriver().findElement(By.id("btnLogin")).click();
         //WebDriverInitialization.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();

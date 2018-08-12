@@ -2,14 +2,20 @@
 <suite name="Testing" verbose="1"  group-by-instances="true">
     <test name="test">
         <parameter name="browser" value="chrome"/>
+        <parameter name="url" value="http://qaerp.franciscanecare.net/Secure/default.aspx"/>
+        <parameter name="username" value="admin"/>
+        <parameter name="password" value="Admin#franciscan"/>
         <classes>
             <class name="Cucumber_Execution.RunnerFile"/>
         </classes>
     </test>
-    <!--test name="test_firefox">
+    <test name="test_firefox">
         <parameter name="browser" value="chrome"/>
+        <parameter name="url" value="http://qaerp.franciscanecare.net/Secure/default.aspx"/>
+        <parameter name="username" value="admin"/>
+        <parameter name="password" value="Admin#franciscan"/>
         <classes>
             <class name="Cucumber_Execution.RunnerFile"/>
         </classes>
-    </test-->
+    </test>
 </suite>

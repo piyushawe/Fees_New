@@ -13,23 +13,34 @@ import org.testng.annotations.*;
  */
 
 @CucumberOptions(
-        features = {"src/test/Feature"},
+        features = {"src/test/Feature/Login.feature"},
         glue = {"Cucumber_Execution"},
         plugin= {"pretty","html:target/cucumber_html_report",
                 "json:target/cucumber.json",
-                "junit:target/cucumber.xml"}
-
+                "junit:target/cucumber.xml"},
+        monochrome = true
 )
 public class RunnerFile
 {
+    public static String global_url;
+    public static String global_username;
+    public static String global_password;
    private TestNGCucumberRunner testing;
    @Parameters("browser")
-   @BeforeClass
+   @BeforeClass(alwaysRun = true)
    public void getTheBroswer(String browser)
    {
        WebDriverInitialization.intiliazedriver(browser);
    }
-   @BeforeClass(alwaysRun=true)
+   @Parameters({"url","username","password"})
+   @BeforeClass(alwaysRun = true)
+   public void getcredential(String url,String username,String password)
+   {
+       global_url=url;
+       global_username=username;
+       global_password=password;
+
+   }   @BeforeClass(alwaysRun=true)
    public void before()
    {
        System.out.println("This is Beforeclass");

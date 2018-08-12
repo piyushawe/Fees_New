@@ -25,7 +25,7 @@ public class WebDriverInitialization {
         switch (Browser.toLowerCase()) {
             case "chrome": {
                 try{
-                    System.setProperty("webdriver.chrome.driver", "E:\\chromedriver_win32\\chromedrive.exe");
+                    System.setProperty("webdriver.chrome.driver", "E:\\chromedriver_win32\\chromedriver.exe");
                     web = new ChromeDriver();
                     LoggerClass.log_info.debug("Code Currently in browser initialization");
                 }
