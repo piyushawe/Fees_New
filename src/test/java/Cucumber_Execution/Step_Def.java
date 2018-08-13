@@ -41,7 +41,6 @@ public class Step_Def {
         //WebDriverInitialization.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
         Utility.getwindow();
         if (Utility.desiredwindow) {
-
         }else{
             Thread.sleep(4000);
             WebDriverInitialization.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
