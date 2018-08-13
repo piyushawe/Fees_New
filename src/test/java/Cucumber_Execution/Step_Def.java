@@ -16,15 +16,15 @@ public class Step_Def {
     private Step_Def sd;
     @FindBy(how=How.ID,using = "txtUserName")
     @CacheLookup
-    public WebElement username;
+    private WebElement username;
 
     @FindBy(how=How.ID,using = "txtPassword")
     @CacheLookup
-    public WebElement password;
+    private WebElement password;
 
     @FindBy(how = How.ID,using = "btnLogin")
     @CacheLookup
-    public WebElement loginbutton;
+    private WebElement loginbutton;
 
     @Given("^opening toolsqa$")
     public void opening_toolsqa() throws Throwable {
