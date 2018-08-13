@@ -3,21 +3,41 @@ package Cucumber_Execution;
 import Log4jpackage.LoggerClass;
 import Webdriver_Support.WebDriverInitialization;
 import Webdriver_Support.Utility;
+import Webdriver_Support.WebDriverMethods;
 import cucumber.api.java.en.Given;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 
 public class Step_Def {
+    private Step_Def sd;
+    @FindBy(how=How.ID,using = "txtUserName")
+    @CacheLookup
+    public WebElement username;
+
+    @FindBy(how=How.ID,using = "txtPassword")
+    @CacheLookup
+    public WebElement password;
+
+    @FindBy(how = How.ID,using = "btnLogin")
+    @CacheLookup
+    public WebElement loginbutton;
+
     @Given("^opening toolsqa$")
     public void opening_toolsqa() throws Throwable {
         //WebDriverInitialization.returnDriver().manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
         // Write code here that turns the phrase above into concrete actions
+        sd=PageFactory.initElements(WebDriverInitialization.returnDriver(),Step_Def.class);
         LoggerClass.log_info.debug("Currently is Background");
         //WebDriverInitialization.returnDriver().navigate().to("http://toolsqa.com/automation-practice-form/");
-        WebDriverInitialization.returnDriver().navigate().to(RunnerFile.global_url);
-        WebDriverInitialization.returnDriver().findElement(By.id("txtUserName")).sendKeys(RunnerFile.global_username);
-        WebDriverInitialization.returnDriver().findElement(By.id("txtPassword")).sendKeys(RunnerFile.global_password);
+        WebDriverMethods.gotToUrl(RunnerFile.global_url);
+        WebDriverMethods.sendText(sd.username,new StringBuilder(RunnerFile.global_username));
+        WebDriverMethods.sendText(sd.password,new StringBuilder(RunnerFile.global_password));
         Thread.sleep(2000);
-        WebDriverInitialization.returnDriver().findElement(By.id("btnLogin")).click();
+        WebDriverMethods.click(sd.loginbutton);
         //WebDriverInitialization.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
         Utility.getwindow();
         if (Utility.desiredwindow) {
@@ -27,7 +47,6 @@ public class Step_Def {
             WebDriverInitialization.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
         }
     }
-
     @Given("^intilize brow$")
     public void intilize_brow() throws Throwable {
         // Write code here that turns the phrase above into concrete actions

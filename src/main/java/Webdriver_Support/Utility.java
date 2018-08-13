@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class Utility {
+public class Utility implements Utility_Int {
 static public boolean desiredwindow=false;
    static public void getwindow()
     {

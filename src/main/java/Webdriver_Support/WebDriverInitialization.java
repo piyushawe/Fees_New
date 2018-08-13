@@ -20,13 +20,14 @@ public class WebDriverInitialization {
     private WebDriverInitialization() {
     }
 
-    static public void intiliazedriver(String Browser) {
+    static public void initializedriver(String Browser) {
         DOMConfigurator.configure("Log4j.xml");
         switch (Browser.toLowerCase()) {
             case "chrome": {
                 try{
                     System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver.exe");
                     web = new ChromeDriver();
+                    WebDriverMethods.maximizeWindow();
                     LoggerClass.log_info.debug("Code Currently in browser initialization");
                 }
                 catch (IllegalStateException e)
