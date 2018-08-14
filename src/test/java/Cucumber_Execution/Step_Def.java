@@ -5,13 +5,15 @@ import Webdriver_Support.WebDriverInitialization;
 import Webdriver_Support.Utility;
 import Webdriver_Support.WebDriverMethods;
 import cucumber.api.java.en.Given;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+
 
 public class Step_Def {
     private Step_Def sd;
@@ -29,16 +31,20 @@ public class Step_Def {
 
     @Given("^opening toolsqa$")
     public void opening_toolsqa() throws Throwable {
-        //WebDriverInitialization.returnDriver().manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
-        // Write code here that turns the phrase above into concrete actions
         sd=PageFactory.initElements(WebDriverInitialization.returnDriver(),Step_Def.class);
-        //PageFactory.initElements(new AjaxElementLocatorFactory(WebDriverInitialization.returnDriver(),5),this);
         LoggerClass.log_info.debug("Currently is Background");
-        //WebDriverInitialization.returnDriver().navigate().to("http://toolsqa.com/automation-practice-form/");
         WebDriverMethods.gotToUrl(RunnerFile.global_url);
-        WebDriverMethods.sendText(sd.username,new StringBuilder(RunnerFile.global_username));
+        WebDriverMethods.pageLoad();
+        try {
+            WebDriverMethods.sendText(sd.username, new StringBuilder(RunnerFile.global_username));
+        }
+        catch (TimeoutException e)
+        {
+            LoggerClass.log_info.debug("Page loading has taken more than 120 seconds");
+            LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
+            System.exit(-2);
+        }
         WebDriverMethods.sendText(sd.password,new StringBuilder(RunnerFile.global_password));
-        Thread.sleep(2000);
         WebDriverMethods.click(sd.loginbutton);
         //WebDriverInitialization.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
         Utility.getwindow();
