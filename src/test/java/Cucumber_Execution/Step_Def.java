@@ -11,6 +11,7 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 public class Step_Def {
     private Step_Def sd;
@@ -31,6 +32,7 @@ public class Step_Def {
         //WebDriverInitialization.returnDriver().manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
         // Write code here that turns the phrase above into concrete actions
         sd=PageFactory.initElements(WebDriverInitialization.returnDriver(),Step_Def.class);
+        //PageFactory.initElements(new AjaxElementLocatorFactory(WebDriverInitialization.returnDriver(),5),this);
         LoggerClass.log_info.debug("Currently is Background");
         //WebDriverInitialization.returnDriver().navigate().to("http://toolsqa.com/automation-practice-form/");
         WebDriverMethods.gotToUrl(RunnerFile.global_url);
