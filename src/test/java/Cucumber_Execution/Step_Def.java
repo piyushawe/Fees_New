@@ -7,6 +7,7 @@ import Webdriver_Support.WebDriverMethods;
 import cucumber.api.java.en.Given;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -17,7 +18,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Step_Def {
     private Step_Def sd;
-    @FindBy(how=How.ID,using = "txtUserName")
+    @FindBy(how=How.ID,using = "txtUserNam")
     @CacheLookup
     private WebElement username;
 
@@ -37,16 +38,20 @@ public class Step_Def {
         WebDriverMethods.pageLoad();
         try {
             WebDriverMethods.sendText(sd.username, new StringBuilder(RunnerFile.global_username));
+            WebDriverMethods.sendText(sd.password,new StringBuilder(RunnerFile.global_password));
+            WebDriverMethods.click(sd.loginbutton);
         }
         catch (TimeoutException e)
         {
             LoggerClass.log_info.debug("Page loading has taken more than 120 seconds");
             LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
+            WebDriverInitialization.returnDriver().quit();
+            System.exit(-2);
+        }catch (NoSuchElementException e)
+        {
+            WebDriverInitialization.returnDriver().quit();
             System.exit(-2);
         }
-        WebDriverMethods.sendText(sd.password,new StringBuilder(RunnerFile.global_password));
-        WebDriverMethods.click(sd.loginbutton);
-        //WebDriverInitialization.returnDriver().findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
         Utility.getwindow();
         if (Utility.desiredwindow) {
         }else{

@@ -1,6 +1,9 @@
 package Webdriver_Support;
 
 import Log4jpackage.LoggerClass;
+import cucumber.api.testng.CucumberFeatureWrapper;
+import cucumber.runtime.model.CucumberBackground;
+import cucumber.runtime.model.CucumberFeature;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -37,9 +40,8 @@ public class WebdriverWaits {
        }
        catch (TimeoutException e)
        {
-           LoggerClass.log_info.debug("Element is not clickable under set time period");
+           LoggerClass.log_info.debug("Element is either not clickable or not available under set time period");
            LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
-
        }
     }
     static public void explicitWait_ElementToBeSelected(WebElement element)
