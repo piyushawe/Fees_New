@@ -10,6 +10,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.sql.Time;
+
 public class WebdriverWaits {
    private static WebDriverWait wait;
     static {
@@ -17,21 +19,51 @@ public class WebdriverWaits {
     }
     static public void explicitWait_visbilityCheck(WebElement element)
     {
-
-        wait.until(ExpectedConditions.visibilityOf(element));
+     try{   wait.until(ExpectedConditions.visibilityOf(element));
     }
+    catch (TimeoutException e)
+    {
+        LoggerClass.log_info.debug("Element is not visible under set time period");
+        LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
+    }
+    }
+//    static public void explicitWait_visbilityAndPresenceCheck(WebElement element)
+//    {
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+//
+//    }
     static public void explicitWait_AlertPresent()
     {
-       wait.until(ExpectedConditions.alertIsPresent());
-    }
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+        }
+        catch (TimeoutException e)
+        {
+            LoggerClass.log_info.debug("Alert is not present under set time period");
+            LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
+
+        }    }
     static public void explicitWait_TextToBePresentInElement(WebElement element, StringBuilder text)
     {
-        wait.until(ExpectedConditions.textToBePresentInElement(element,text.toString()));
-
+        try {
+            wait.until(ExpectedConditions.textToBePresentInElement(element, text.toString()));
+        }
+        catch (TimeoutException e)
+        {
+            LoggerClass.log_info.debug("Text is not available under set time period");
+            LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
+        }
     }
     static public void explicitWait_CheckTitle(StringBuilder title)
     {
-      wait.until(ExpectedConditions.titleIs(title.toString()));
+        try {
+            wait.until(ExpectedConditions.titleIs(title.toString()));
+        }
+        catch (TimeoutException e)
+        {
+            LoggerClass.log_info.debug("Title is not present under set time period or Page has been changed");
+            LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
+        }
     }
     static public void explicitWait_ElementToBeClickable(WebElement element)
     {
@@ -46,8 +78,15 @@ public class WebdriverWaits {
     }
     static public void explicitWait_ElementToBeSelected(WebElement element)
     {
-        wait.until(ExpectedConditions.elementToBeSelected(element));
-    }
+        try {
+            wait.until(ExpectedConditions.elementToBeSelected(element));
+        }
+        catch (TimeoutException e)
+        {
+            LoggerClass.log_info.debug("Element is either not selected or not available under set time period");
+            LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
+
+        }    }
     static public void explicitWait_InvisibilityOf(WebElement element)
     {
         wait.until(ExpectedConditions.invisibilityOf(element));

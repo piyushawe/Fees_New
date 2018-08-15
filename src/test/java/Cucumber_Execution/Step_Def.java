@@ -18,7 +18,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Step_Def {
     private Step_Def sd;
-    @FindBy(how=How.ID,using = "txtUserNam")
+    @FindBy(how=How.ID,using = "txtUserName")
     @CacheLookup
     private WebElement username;
 
@@ -35,7 +35,7 @@ public class Step_Def {
         sd=PageFactory.initElements(WebDriverInitialization.returnDriver(),Step_Def.class);
         LoggerClass.log_info.debug("Currently is Background");
         WebDriverMethods.gotToUrl(RunnerFile.global_url);
-        WebDriverMethods.pageLoad();
+        WebDriverMethods.pageLoad(new StringBuilder("Franciscan ERP"));
         try {
             WebDriverMethods.sendText(sd.username, new StringBuilder(RunnerFile.global_username));
             WebDriverMethods.sendText(sd.password,new StringBuilder(RunnerFile.global_password));

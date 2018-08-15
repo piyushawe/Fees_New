@@ -54,7 +54,7 @@ public class RunnerFile
        return testing.provideFeatures();
    }
 
-   @Test(dataProvider = "getscenario",groups = "Positive")
+   @Test(dataProvider = "getscenario")
     public void getscen(CucumberFeatureWrapper cf)
    {
        testing.runCucumber(cf.getCucumberFeature());

@@ -23,8 +23,9 @@ static public void click(WebElement element) throws NoSuchElementException
     WebdriverWaits.explicitWait_ElementToBeClickable(element);
     element.click();
 }
-static public void pageLoad()
+static public void pageLoad(StringBuilder title)
 {
+        WebdriverWaits.explicitWait_CheckTitle(title);
         WebDriverInitialization.returnDriver().manage().timeouts().pageLoadTimeout(120, TimeUnit.SECONDS);
 }}
 
