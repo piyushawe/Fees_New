@@ -13,7 +13,7 @@ import org.testng.annotations.*;
  */
 
 @CucumberOptions(
-        features = {"src/test/Feature/Login.feature"},
+        features = {"src/test/Feature/DefineRemark.feature"},
         glue = {"Cucumber_Execution"},
         plugin= {"pretty","html:target/cucumber_html_report",
                 "json:target/cucumber.json",
