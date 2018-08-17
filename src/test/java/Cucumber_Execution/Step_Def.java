@@ -1,6 +1,7 @@
 package Cucumber_Execution;
 
 import Log4jpackage.LoggerClass;
+import Webdriver_Support.Locators;
 import Webdriver_Support.WebDriverInitialization;
 import Webdriver_Support.Utility;
 import Webdriver_Support.WebDriverMethods;
@@ -8,7 +9,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -18,7 +18,7 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 
-public class Step_Def {
+public class Step_Def implements Locators {
     private Step_Def sd;
     @FindBy(how=How.ID,using = "txtUserName")
     @CacheLookup
@@ -42,7 +42,7 @@ public class Step_Def {
         sd=PageFactory.initElements(WebDriverInitialization.returnDriver(),Step_Def.class);
         LoggerClass.log_info.debug("Currently is Background");
         WebDriverMethods.gotToUrl(RunnerFile.global_url);
-        WebDriverMethods.pageLoad(new StringBuilder("Franciscan ERP"));
+        WebDriverMethods.pageLoad(Utility.propertyfilereader(messagefilepath,new StringBuilder("login_title")));
     }
 
     @When("^Enter the username$")
@@ -52,7 +52,7 @@ public class Step_Def {
         }
         catch (TimeoutException e)
         {
-            LoggerClass.log_info.debug("Page loading has taken more than 120 seconds");
+            LoggerClass.log_info.debug(Utility.propertyfilereader(messagefilepath,new StringBuilder("pageloadingmessage")));
             LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
             WebDriverInitialization.returnDriver().quit();
             System.exit(-2);
