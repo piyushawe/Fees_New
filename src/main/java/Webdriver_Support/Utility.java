@@ -23,7 +23,7 @@ static public boolean desiredwindow=false;
 static public boolean desiredframe=false;
 static private Utility util;
 @FindBy(how=How.XPATH,using = "//iframe")
-private ArrayList<WebElement> frames;
+private List<WebElement> frames;
 static
 {
    util=PageFactory.initElements(WebDriverInitialization.returnDriver(),Utility.class);
@@ -73,6 +73,7 @@ static
      while (it.hasNext())
      {
          WebElement element=(WebElement)it.next();
+         System.out.println(element.getAttribute("name "));
          if(element.getAttribute("name").equalsIgnoreCase(framename.toString()))
          {
              WebDriverInitialization.returnDriver().switchTo().frame(element);

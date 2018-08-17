@@ -9,9 +9,11 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -39,59 +41,68 @@ public class Step_Def implements Locators {
      **/
     @Given("^Go to the url$")
     public void go_to_the_url(){
+        Utility.getdesiredframe(new StringBuilder(defineremark));
+        if(Utility.desiredframe)
+        {}
+        else{
         sd=PageFactory.initElements(WebDriverInitialization.returnDriver(),Step_Def.class);
         LoggerClass.log_info.debug("Currently is Background");
         WebDriverMethods.gotToUrl(RunnerFile.global_url);
         WebDriverMethods.pageLoad(Utility.propertyfilereader(messagefilepath,new StringBuilder("login_title")));
+        }
     }
 
     @When("^Enter the username$")
     public void enter_the_username(){
-        try {
-            WebDriverMethods.sendText(sd.username, new StringBuilder(RunnerFile.global_username));
+        if(Utility.desiredframe){}
+        else {
+            try {
+                WebDriverMethods.sendText(sd.username, new StringBuilder(RunnerFile.global_username));
+            } catch (TimeoutException e) {
+                LoggerClass.log_info.debug(Utility.propertyfilereader(messagefilepath, new StringBuilder("pageloadingmessage")));
+                LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
+                WebDriverInitialization.returnDriver().quit();
+                System.exit(-2);
+            } catch (NoSuchElementException e) {
+                WebDriverInitialization.returnDriver().quit();
+                System.exit(-2);
+            }
         }
-        catch (TimeoutException e)
-        {
-            LoggerClass.log_info.debug(Utility.propertyfilereader(messagefilepath,new StringBuilder("pageloadingmessage")));
-            LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
-            WebDriverInitialization.returnDriver().quit();
-            System.exit(-2);
-        }catch (NoSuchElementException e)
-        {
-            WebDriverInitialization.returnDriver().quit();
-            System.exit(-2);
-        }
-
     }
 
     @When("^Enter the password$")
     public void enter_the_password(){
-        try {
-            WebDriverMethods.sendText(sd.password,new StringBuilder(RunnerFile.global_password));
+        if(Utility.desiredframe)
+        {}
+        else {
+            try {
+                WebDriverMethods.sendText(sd.password, new StringBuilder(RunnerFile.global_password));
+            } catch (NoSuchElementException e) {
+                WebDriverInitialization.returnDriver().quit();
+                System.exit(-2);
+            }
         }
-       catch (NoSuchElementException e)
-        {
-            WebDriverInitialization.returnDriver().quit();
-            System.exit(-2);
-        }
-
     }
 
     @Then("^Click on login button$")
     public void click_on_login_button(){
-        try {
-            WebDriverMethods.click(sd.loginbutton);
+        if(Utility.desiredframe)
+        { }
+        else {
+            try {
+                WebDriverMethods.click(sd.loginbutton);
+            } catch (NoSuchElementException e) {
+                WebDriverInitialization.returnDriver().quit();
+                System.exit(-2);
+            }
         }
-      catch (NoSuchElementException e)
-        {
-            WebDriverInitialization.returnDriver().quit();
-            System.exit(-2);
-        }
-
     }
 
     @Then("^Click on the fees button$")
     public void click_on_the_fees_button(){
+        if(Utility.desiredframe)
+        {}
+        else{
         Utility.getwindow();
         if (Utility.desiredwindow) {
         }else{
@@ -106,9 +117,16 @@ public class Step_Def implements Locators {
         }
 
     }
+    }
     @Then("^Go to the left navigation panel and click on Global Master$")
     public void go_to_the_left_navigation_panel_and_click_on_Global_Master(){
-        // Write code here that turns the phrase above into concrete actions
+        if(Utility.desiredframe){}
+        else {
+            Actions ac = new Actions(WebDriverInitialization.returnDriver());
+            ac.moveToElement(WebDriverInitialization.returnDriver().findElement(By.xpath("//div[@role='navigation']"))).perform();
+            WebDriverInitialization.returnDriver().findElement(By.xpath("//span[text()='Global Masters']")).click();
+            WebDriverInitialization.returnDriver().findElement(By.xpath("//span[text()='Define Remark']")).click();
+        }
 
     }
 
