@@ -71,5 +71,6 @@ public class RunnerFile
    {
        WebDriverInitialization.returnDriver().quit();
        Utility.desiredwindow=false;
+       Utility.desiredframe=false;
    }
 }
