@@ -61,7 +61,7 @@ public class WebdriverWaits {
         }
         catch (TimeoutException e)
         {
-            LoggerClass.log_info.debug("Title is not present under set time period or Page has been changed");
+            LoggerClass.log_info.debug("Title is not present under set time period or Page has been changed" +title);
             LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
         }
     }

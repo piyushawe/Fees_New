@@ -6,8 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-
-import javax.rmi.CORBA.Util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,7 +17,6 @@ import java.util.Properties;
 
 
 public class Utility implements Utility_Int {
-static public boolean desiredwindow=false;
 static public boolean desiredframe=false;
 static private Utility util;
 @FindBy(how=How.XPATH,using = "//iframe")
@@ -37,7 +34,6 @@ static
             String s=(String)it.next();
             if(WebDriverInitialization.returnDriver().switchTo().window(s).getTitle().equalsIgnoreCase("Fees"))
             {
-                desiredwindow=true;
                 break;
             }
         }
@@ -73,7 +69,7 @@ static
      while (it.hasNext())
      {
          WebElement element=(WebElement)it.next();
-         System.out.println(element.getAttribute("name "));
+         //System.out.println(element.getAttribute("name "));
          if(element.getAttribute("name").equalsIgnoreCase(framename.toString()))
          {
              WebDriverInitialization.returnDriver().switchTo().frame(element);
