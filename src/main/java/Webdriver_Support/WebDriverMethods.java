@@ -1,7 +1,6 @@
 package Webdriver_Support;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;

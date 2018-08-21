@@ -1,16 +1,12 @@
 package Webdriver_Support;
 
 import Log4jpackage.LoggerClass;
-import cucumber.api.testng.CucumberFeatureWrapper;
-import cucumber.runtime.model.CucumberBackground;
-import cucumber.runtime.model.CucumberFeature;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.sql.Time;
 
 public class WebdriverWaits {
    private static WebDriverWait wait;
