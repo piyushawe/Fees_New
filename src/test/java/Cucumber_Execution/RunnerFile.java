@@ -12,11 +12,15 @@ import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import cucumber.api.CucumberOptions;
 import cucumber.api.Scenario;
+import cucumber.api.StepDefinitionReporter;
 import cucumber.api.java.Before;
+import cucumber.api.java.BeforeStep;
 import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.PickleEventWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
+import cucumber.runtime.StepDefinition;
 import cucumber.runtime.model.CucumberFeature;
+import net.thucydides.core.steps.StepEventBus;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -76,12 +80,18 @@ public class RunnerFile
     private ExtentTest steptest;
     private static RunnerFile sd;
     private static String sct;
+    private static String stp;
     @Before
     public void getScenario(Scenario scenario)
     {
 
         LoggerClass.log_info.debug("Currently getting scenario name");
         sct=scenario.getName();
+    }
+    @BeforeStep
+    public void getStep()
+    {
+
     }
     @Parameters("browser")
     @BeforeClass(alwaysRun = true)
@@ -173,10 +183,13 @@ public class RunnerFile
        testing.runScenario(pickle.getPickleEvent());
        //ExtentCucumberFormatter ext=new ExtentCucumberFormatter(new File(System.getProperty("user.dir")+"/reports/Test.html"));
 //cf.getCucumberFeature().getGherkinFeature().getName()
+       String step= StepEventBus.getEventBus().getCurrentStep().toString();
+
        logger = reports.createTest(pickle.getPickleEvent().uri);
        scenariotest=logger.createNode(sct);
+       steptest=scenariotest.createNode(step);
        Assert.assertTrue(true);
-       scenariotest.log(Status.PASS, MarkupHelper.createLabel("piyush test passed", ExtentColor.GREEN));
+       steptest.log(Status.PASS, MarkupHelper.createLabel("piyush test passed", ExtentColor.GREEN));
 
 //       try {
 //           logger.fail("test failed ", MediaEntityBuilder.createScreenCaptureFromPath("screenshot.png").build());
