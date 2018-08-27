@@ -12,15 +12,13 @@ import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import cucumber.api.CucumberOptions;
 import cucumber.api.Scenario;
-import cucumber.api.StepDefinitionReporter;
+import cucumber.api.formatter.Formatter;
 import cucumber.api.java.Before;
 import cucumber.api.java.BeforeStep;
 import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.PickleEventWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
-import cucumber.runtime.StepDefinition;
-import cucumber.runtime.model.CucumberFeature;
-import net.thucydides.core.steps.StepEventBus;
+import cucumber.runtime.StepDefinitionMatch;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -48,6 +46,7 @@ import static Webdriver_Support.Locators.messagefilepath;
                 "junit:target/cucumber.xml"},*/
         plugin={"pretty","html:/reports\\cucumber-pretty",
                 "json:/Reports\\cucumber.json",
+                "Cucumber_Execution.Custom_Formatter"
                 },
         monochrome = true
 )
@@ -84,13 +83,8 @@ public class RunnerFile
     @Before
     public void getScenario(Scenario scenario)
     {
-
         LoggerClass.log_info.debug("Currently getting scenario name");
         sct=scenario.getName();
-    }
-    @BeforeStep
-    public void getStep()
-    {
 
     }
     @Parameters("browser")
@@ -183,13 +177,16 @@ public class RunnerFile
        testing.runScenario(pickle.getPickleEvent());
        //ExtentCucumberFormatter ext=new ExtentCucumberFormatter(new File(System.getProperty("user.dir")+"/reports/Test.html"));
 //cf.getCucumberFeature().getGherkinFeature().getName()
-       String step= StepEventBus.getEventBus().getCurrentStep().toString();
-
-       logger = reports.createTest(pickle.getPickleEvent().uri);
+       //System.out.println(stp);
+       String featurname=pickle.getPickleEvent().uri;
+       featurname=featurname.substring(featurname.lastIndexOf("/")+1,featurname.indexOf(".feature"));
+       System.out.printf(featurname);
+       logger = reports.createTest(featurname+"_"+sct);
        scenariotest=logger.createNode(sct);
-       steptest=scenariotest.createNode(step);
+       steptest=scenariotest.createNode(Thread_Local.get().getStepText());
        Assert.assertTrue(true);
        steptest.log(Status.PASS, MarkupHelper.createLabel("piyush test passed", ExtentColor.GREEN));
+       //steptest.log(Status.FAIL,MarkupHelper.createLabel("Test Failed",ExtentColor.RED));
 
 //       try {
 //           logger.fail("test failed ", MediaEntityBuilder.createScreenCaptureFromPath("screenshot.png").build());
