@@ -5,18 +5,22 @@ import Webdriver_Support.WebDriverInitialization;
 import Webdriver_Support.Utility;
 import Webdriver_Support.WebDriverMethods;
 import com.aventstack.extentreports.*;
-import com.aventstack.extentreports.gherkin.model.Feature;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.vimalselvam.cucumber.listener.ExtentCucumberFormatter;
 import cucumber.api.CucumberOptions;
 import cucumber.api.Scenario;
+import cucumber.api.StepDefinitionReporter;
+import cucumber.api.java.Before;
+import cucumber.api.java.BeforeStep;
 import cucumber.api.testng.CucumberFeatureWrapper;
+import cucumber.api.testng.PickleEventWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
-import gherkin.formatter.model.Step;
+import cucumber.runtime.StepDefinition;
+import cucumber.runtime.model.CucumberFeature;
+import net.thucydides.core.steps.StepEventBus;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -26,12 +30,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import org.testng.ITestResult;
 import org.testng.annotations.*;
 
-
-import java.io.File;
-import java.io.IOException;
 
 import static Webdriver_Support.Locators.messagefilepath;
 
@@ -41,7 +41,7 @@ import static Webdriver_Support.Locators.messagefilepath;
  */
 
 @CucumberOptions(
-        features = {"src/test/Feature/DefineRemark.feature"},
+        features = {"src/test/Feature"},
         glue = {"Cucumber_Execution"},
        /* plugin= {"pretty","html:target/cucumber_html_report",
                 "json:target/cucumber.json",
@@ -53,7 +53,6 @@ import static Webdriver_Support.Locators.messagefilepath;
 )
 public class RunnerFile
 {
-    Scenario sc;
     @FindBy(how= How.ID,using = "txtUserName")
     @CacheLookup
     private WebElement username;
@@ -80,6 +79,20 @@ public class RunnerFile
     private ExtentTest scenariotest;
     private ExtentTest steptest;
     private static RunnerFile sd;
+    private static String sct;
+    private static String stp;
+    @Before
+    public void getScenario(Scenario scenario)
+    {
+
+        LoggerClass.log_info.debug("Currently getting scenario name");
+        sct=scenario.getName();
+    }
+    @BeforeStep
+    public void getStep()
+    {
+
+    }
     @Parameters("browser")
     @BeforeClass(alwaysRun = true)
     public void getTheBroswer(String browser)
@@ -160,37 +173,38 @@ public class RunnerFile
    @DataProvider(name="getscenario")
     public Object[][] getdata()
    {
-       return testing.provideFeatures();
+       return testing.provideScenarios();
    }
 
    @Test(dataProvider = "getscenario")
-    public void getscen(CucumberFeatureWrapper cf)
-   {
-       Feature feature=new Feature();
-       com.aventstack.extentreports.gherkin.model.Scenario s=new com.aventstack.extentreports.gherkin.model.Scenario();
+    public void getscen(PickleEventWrapper pickle, CucumberFeatureWrapper cf) throws Throwable {
+//       Feature feature=new Feature();
       // LoggerClass.log_info.debug(sc.getName()+" ");
-       testing.runCucumber(cf.getCucumberFeature());
+       testing.runScenario(pickle.getPickleEvent());
        //ExtentCucumberFormatter ext=new ExtentCucumberFormatter(new File(System.getProperty("user.dir")+"/reports/Test.html"));
+//cf.getCucumberFeature().getGherkinFeature().getName()
+       String step= StepEventBus.getEventBus().getCurrentStep().toString();
 
-       logger = reports.createTest(feature.getClass().getName());
-       scenariotest=logger.createNode(s.getClass().getName());
+       logger = reports.createTest(pickle.getPickleEvent().uri);
+       scenariotest=logger.createNode(sct);
+       steptest=scenariotest.createNode(step);
        Assert.assertTrue(true);
-       scenariotest.log(Status.PASS, MarkupHelper.createLabel("Test Case Passed is passTest", ExtentColor.GREEN));
+       steptest.log(Status.PASS, MarkupHelper.createLabel("piyush test passed", ExtentColor.GREEN));
 
-       try {
-           scenariotest.fail("Pass Details", MediaEntityBuilder.createScreenCaptureFromPath("screenshot.png").build());
-       } catch (IOException ex) {
-           LoggerClass.log_error.error("I/O Exception occured"+ ExceptionUtils.getStackTrace(ex));
-       }
+//       try {
+//           logger.fail("test failed ", MediaEntityBuilder.createScreenCaptureFromPath("screenshot.png").build());
+//       } catch (IOException ex) {
+//           LoggerClass.log_error.error("I/O Exception occured"+ ExceptionUtils.getStackTrace(ex));
+//       }
    }
-   @Test
-    public void extentReport(Feature feature, Scenario scenario, Step step) throws ClassNotFoundException, IOException {
-//       logger=reports.createTest(com.aventstack.extentreports.gherkin.model.Feature.class,feature.getClass().getName());
+//   @Test
+//    public void extentReport(Feature feature, Scenario scenario, Step step) throws ClassNotFoundException, IOException {
+//     logger=reports.createTest(com.aventstack.extentreports.gherkin.model.Feature.class,feature.getClass().getName());
 //       scenariotest=logger.createNode(com.aventstack.extentreports.gherkin.model.Scenario.class,scenario.getName());
 //       steptest=scenariotest.createNode(new GherkinKeyword(step.getKeyword()),step.getKeyword()+step.getName());
 //       steptest.log(Status.PASS,MarkupHelper.createLabel("Step  "+step.getName()+"   passed",ExtentColor.GREEN));
 //       steptest.fail("Failed step  "+step.getName(),MediaEntityBuilder.createScreenCaptureFromPath(step.getName()).build());
-   }
+//   }
     /**
      * Need to close window as for different test in testng.xml there is no need of previous windows and for parallel testing
      *      if i don't close window then getWindowsHandles method will might provide undesired output
@@ -205,12 +219,6 @@ public class RunnerFile
        WebDriverInitialization.returnDriver().quit();
        Utility.desiredframe=false;
    }
-   @AfterMethod
-    public void getResult(ITestResult sc)
-   {
-       if(!(sc.isSuccess())) {
-           logger.log(Status.FAIL, MarkupHelper.createLabel(sc.getName() + " - Test Case Failed", ExtentColor.RED));
-       }
-   }
+
 
 }
