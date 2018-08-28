@@ -6,7 +6,10 @@ import cucumber.api.event.EventPublisher;
 import cucumber.api.event.TestStepStarted;
 import cucumber.api.formatter.Formatter;
 
+import java.util.ArrayList;
+
 public class Custom_Formatter implements Formatter {
+   public static ArrayList<String> stepnames=new ArrayList<String>();
 
 
         public Custom_Formatter() {}
@@ -15,6 +18,7 @@ public class Custom_Formatter implements Formatter {
             @Override
             public void receive(TestStepStarted event) {
                 handleTestStepStarted(event);
+                //stepnames=Thread_Local.get().getStepText();
             }
         };
 

@@ -83,15 +83,31 @@ public class RunnerFile
     private Boolean flag=true;
     private StringBuilder duplicatefeaturename;
     private String step;
+    private static PickleEventWrapper pickle;
     @Before
     public void getScenario(Scenario scenario)
     {
         LoggerClass.log_info.debug("Currently getting scenario name");
         sct=new StringBuilder(scenario.getName());
+        StringBuilder featurname=new StringBuilder(pickle.getPickleEvent().uri);
+        featurname=new StringBuilder(featurname.toString().substring(featurname.lastIndexOf("/")+1,featurname.indexOf(".feature")));
+        if(flag)
+        {
+            duplicatefeaturename=featurname;
+            flag=false;
+            logger = reports.createTest(featurname.toString());
+        }
+        if(!(featurname.toString().equalsIgnoreCase(duplicatefeaturename.toString())))
+        {
+            duplicatefeaturename=featurname;
+            logger = reports.createTest(featurname.toString());
+        }
+        scenariotest=logger.createNode(sct.toString());
     }
+    @BeforeStep
     public void beforeStep()
     {
-
+        System.out.println("Stepssssss");
     }
     @Parameters("browser")
     @BeforeClass(alwaysRun = true)
@@ -177,22 +193,22 @@ public class RunnerFile
    }
 
    @Test(dataProvider = "getscenario")
-    public void getscen(PickleEventWrapper pickle, CucumberFeatureWrapper cf) throws Throwable {
+    public void getscen(pickle , CucumberFeatureWrapper cf) throws Throwable {
        testing.runScenario(pickle.getPickleEvent());
-       StringBuilder featurname=new StringBuilder(pickle.getPickleEvent().uri);
-       featurname=new StringBuilder(featurname.toString().substring(featurname.lastIndexOf("/")+1,featurname.indexOf(".feature")));
-       if(flag)
-       {
-           duplicatefeaturename=featurname;
-         flag=false;
-         logger = reports.createTest(featurname.toString());
-       }
-       if(!(featurname.toString().equalsIgnoreCase(duplicatefeaturename.toString())))
-       {
-           duplicatefeaturename=featurname;
-           logger = reports.createTest(featurname.toString());
-       }
-       scenariotest=logger.createNode(sct.toString());
+//       StringBuilder featurname=new StringBuilder(pickle.getPickleEvent().uri);
+//       featurname=new StringBuilder(featurname.toString().substring(featurname.lastIndexOf("/")+1,featurname.indexOf(".feature")));
+//       if(flag)
+//       {
+//           duplicatefeaturename=featurname;
+//         flag=false;
+//         logger = reports.createTest(featurname.toString());
+//       }
+//       if(!(featurname.toString().equalsIgnoreCase(duplicatefeaturename.toString())))
+//       {
+//           duplicatefeaturename=featurname;
+//           logger = reports.createTest(featurname.toString());
+//       }
+//       scenariotest=logger.createNode(sct.toString());
        steptest=scenariotest.createNode(Thread_Local.get().getStepText());
        steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
 //       steptest=scenariotest.createNode(Thread_Local.get().getStepText());
