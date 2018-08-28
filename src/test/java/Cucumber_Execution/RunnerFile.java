@@ -13,6 +13,7 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 import cucumber.api.CucumberOptions;
 import cucumber.api.Scenario;
 import cucumber.api.formatter.Formatter;
+import cucumber.api.java.AfterStep;
 import cucumber.api.java.Before;
 import cucumber.api.java.BeforeStep;
 import cucumber.api.testng.CucumberFeatureWrapper;
@@ -78,13 +79,18 @@ public class RunnerFile
     private ExtentTest scenariotest;
     private ExtentTest steptest;
     private static RunnerFile sd;
-    private static String sct;
-    private static String stp;
+    private static StringBuilder sct;
+    private Boolean flag=true;
+    private StringBuilder duplicatefeaturename;
+    private String step;
     @Before
     public void getScenario(Scenario scenario)
     {
         LoggerClass.log_info.debug("Currently getting scenario name");
-        sct=scenario.getName();
+        sct=new StringBuilder(scenario.getName());
+    }
+    public void beforeStep()
+    {
 
     }
     @Parameters("browser")
@@ -158,8 +164,8 @@ public class RunnerFile
        reports.setSystemInfo("Host Name", "MyTest");
        reports.setSystemInfo("Environment", "SIT");
        reports.setSystemInfo("User Name", "Peter Wong");
-       htmlReporter.config().setDocumentTitle("Test Report");
-       htmlReporter.config().setReportName("Test Report");
+       htmlReporter.config().setDocumentTitle("Automation_Report");
+       htmlReporter.config().setReportName("Automation_Report_1");
        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
        htmlReporter.config().setTheme(Theme.STANDARD);
    }
@@ -172,36 +178,28 @@ public class RunnerFile
 
    @Test(dataProvider = "getscenario")
     public void getscen(PickleEventWrapper pickle, CucumberFeatureWrapper cf) throws Throwable {
-//       Feature feature=new Feature();
-      // LoggerClass.log_info.debug(sc.getName()+" ");
        testing.runScenario(pickle.getPickleEvent());
-       //ExtentCucumberFormatter ext=new ExtentCucumberFormatter(new File(System.getProperty("user.dir")+"/reports/Test.html"));
-//cf.getCucumberFeature().getGherkinFeature().getName()
-       //System.out.println(stp);
-       String featurname=pickle.getPickleEvent().uri;
-       featurname=featurname.substring(featurname.lastIndexOf("/")+1,featurname.indexOf(".feature"));
-       System.out.printf(featurname);
-       logger = reports.createTest(featurname+"_"+sct);
-       scenariotest=logger.createNode(sct);
+       StringBuilder featurname=new StringBuilder(pickle.getPickleEvent().uri);
+       featurname=new StringBuilder(featurname.toString().substring(featurname.lastIndexOf("/")+1,featurname.indexOf(".feature")));
+       if(flag)
+       {
+           duplicatefeaturename=featurname;
+         flag=false;
+         logger = reports.createTest(featurname.toString());
+       }
+       if(!(featurname.toString().equalsIgnoreCase(duplicatefeaturename.toString())))
+       {
+           duplicatefeaturename=featurname;
+           logger = reports.createTest(featurname.toString());
+       }
+       scenariotest=logger.createNode(sct.toString());
        steptest=scenariotest.createNode(Thread_Local.get().getStepText());
-       Assert.assertTrue(true);
-       steptest.log(Status.PASS, MarkupHelper.createLabel("piyush test passed", ExtentColor.GREEN));
-       //steptest.log(Status.FAIL,MarkupHelper.createLabel("Test Failed",ExtentColor.RED));
+       steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
+//       steptest=scenariotest.createNode(Thread_Local.get().getStepText());
+//       steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
+       //scenariotest.log(Status.PASS,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.GREEN));
 
-//       try {
-//           logger.fail("test failed ", MediaEntityBuilder.createScreenCaptureFromPath("screenshot.png").build());
-//       } catch (IOException ex) {
-//           LoggerClass.log_error.error("I/O Exception occured"+ ExceptionUtils.getStackTrace(ex));
-//       }
-   }
-//   @Test
-//    public void extentReport(Feature feature, Scenario scenario, Step step) throws ClassNotFoundException, IOException {
-//     logger=reports.createTest(com.aventstack.extentreports.gherkin.model.Feature.class,feature.getClass().getName());
-//       scenariotest=logger.createNode(com.aventstack.extentreports.gherkin.model.Scenario.class,scenario.getName());
-//       steptest=scenariotest.createNode(new GherkinKeyword(step.getKeyword()),step.getKeyword()+step.getName());
-//       steptest.log(Status.PASS,MarkupHelper.createLabel("Step  "+step.getName()+"   passed",ExtentColor.GREEN));
-//       steptest.fail("Failed step  "+step.getName(),MediaEntityBuilder.createScreenCaptureFromPath(step.getName()).build());
-//   }
+  }
     /**
      * Need to close window as for different test in testng.xml there is no need of previous windows and for parallel testing
      *      if i don't close window then getWindowsHandles method will might provide undesired output

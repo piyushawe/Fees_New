@@ -7,6 +7,7 @@ Feature:Testing of function
 
   Scenario: Login to chrome
     Given open tools qa
+    When openji
 
   Scenario: Login to Firefox
     Given intilize brow

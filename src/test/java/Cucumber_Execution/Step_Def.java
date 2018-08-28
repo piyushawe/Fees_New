@@ -65,6 +65,11 @@ public class Step_Def implements Locators {
         // Write code here that turns the phrase above into concrete actions
         System.out.println("This is chrome");
     }
+    @When("^openji$")
+    public void openji() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        //WebDriverInitialization.returnDriver().findElement(By.)
+    }
     @Given("^do testing$")
     public void do_testing() throws Throwable {
         // Write code here that turns the phrase above into concrete actions

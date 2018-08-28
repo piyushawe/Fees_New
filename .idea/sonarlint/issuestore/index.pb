@@ -8,3 +8,6 @@ A
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 9
 	Log4j.xml,6\e\6e23b23b0d2c1c49d1de82da9dc3fd197d325091
+:
+
+dependency,d\e\de58e2b17c19600779694943b2ec4bd29c3e2f3f
