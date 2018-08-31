@@ -16,6 +16,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -88,19 +90,18 @@ static
     }
     static public void converToZip()
     {
+        System.out.println("zip");
      try(FileOutputStream fo=new FileOutputStream(System.getProperty("user.dir")+"/reports/MyZip.zip");
          FileInputStream fi=new FileInputStream(System.getProperty("user.dir")+"/reports/Test.html"))
      {
          ZipEntry ze=new ZipEntry("Test.html");
          ZipOutputStream zos=new ZipOutputStream(fo);
          zos.putNextEntry(ze);
-         byte[] buffer=new byte[1024];
-         int len;
-         while((len=fi.read(buffer))>0)
-         {
-          fo.write(buffer,0,len);
-         }
-         zos.finish();
+         byte[] buffer= Files.readAllBytes(Paths.get(System.getProperty("user.dir")+"/reports/Test.html"));
+
+          zos.write(buffer,0,buffer.length);
+         zos.closeEntry();
+         zos.close();
 
      }catch (IOException e)
      {

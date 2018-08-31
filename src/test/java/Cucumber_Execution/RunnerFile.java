@@ -205,6 +205,7 @@ public class RunnerFile
    @AfterClass
     public void closeBrowser() {
        reports.flush();
+       System.out.println("flush");
        WebDriverInitialization.returnDriver().quit();
        Utility.desiredframe=false;
    }
