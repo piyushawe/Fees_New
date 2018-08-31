@@ -12,14 +12,11 @@ import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import cucumber.api.CucumberOptions;
 import cucumber.api.Scenario;
-import cucumber.api.formatter.Formatter;
 import cucumber.api.java.AfterStep;
 import cucumber.api.java.Before;
-import cucumber.api.java.BeforeStep;
 import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.PickleEventWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
-import cucumber.runtime.StepDefinitionMatch;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -28,7 +25,6 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 
@@ -51,6 +47,7 @@ import static Webdriver_Support.Locators.messagefilepath;
                 },
         monochrome = true
 )
+@Listeners(Webdriver_Support.Listeners.class)
 public class RunnerFile
 {
     @FindBy(how= How.ID,using = "txtUserName")
@@ -73,23 +70,22 @@ public class RunnerFile
     public static String global_username;
     public static String global_password;
     private TestNGCucumberRunner testing;
-    private ExtentHtmlReporter htmlReporter;
-    private ExtentReports reports;
-    private ExtentTest logger;
-    private ExtentTest scenariotest;
-    private ExtentTest steptest;
+    private static ExtentHtmlReporter htmlReporter;
+    private static ExtentReports reports;
+    private static ExtentTest logger;
+    private static ExtentTest scenariotest;
+    private static ExtentTest steptest;
     private static RunnerFile sd;
     private static StringBuilder sct;
-    private Boolean flag=true;
-    private StringBuilder duplicatefeaturename;
-    private String step;
-    private static PickleEventWrapper pickle;
+    private static Boolean flag=true;
+    private static StringBuilder duplicatefeaturename;
+    private static PickleEventWrapper globalpickle;
     @Before
     public void getScenario(Scenario scenario)
     {
         LoggerClass.log_info.debug("Currently getting scenario name");
         sct=new StringBuilder(scenario.getName());
-        StringBuilder featurname=new StringBuilder(pickle.getPickleEvent().uri);
+        StringBuilder featurname=new StringBuilder(globalpickle.getPickleEvent().uri);
         featurname=new StringBuilder(featurname.toString().substring(featurname.lastIndexOf("/")+1,featurname.indexOf(".feature")));
         if(flag)
         {
@@ -104,9 +100,11 @@ public class RunnerFile
         }
         scenariotest=logger.createNode(sct.toString());
     }
-    @BeforeStep
+    @AfterStep
     public void beforeStep()
     {
+        steptest=scenariotest.createNode(Thread_Local.get().getStepText());
+        steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
         System.out.println("Stepssssss");
     }
     @Parameters("browser")
@@ -159,7 +157,6 @@ public class RunnerFile
        }
            try {
                WebDriverMethods.click(sd.feesbutton);
-               //WebDriverMethods.pageLoad(Utility.propertyfilereader(messagefilepath,new StringBuilder("Fees_Title")));
            }
            catch (NoSuchElementException e)
            {
@@ -193,27 +190,9 @@ public class RunnerFile
    }
 
    @Test(dataProvider = "getscenario")
-    public void getscen(pickle , CucumberFeatureWrapper cf) throws Throwable {
-       testing.runScenario(pickle.getPickleEvent());
-//       StringBuilder featurname=new StringBuilder(pickle.getPickleEvent().uri);
-//       featurname=new StringBuilder(featurname.toString().substring(featurname.lastIndexOf("/")+1,featurname.indexOf(".feature")));
-//       if(flag)
-//       {
-//           duplicatefeaturename=featurname;
-//         flag=false;
-//         logger = reports.createTest(featurname.toString());
-//       }
-//       if(!(featurname.toString().equalsIgnoreCase(duplicatefeaturename.toString())))
-//       {
-//           duplicatefeaturename=featurname;
-//           logger = reports.createTest(featurname.toString());
-//       }
-//       scenariotest=logger.createNode(sct.toString());
-       steptest=scenariotest.createNode(Thread_Local.get().getStepText());
-       steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
-//       steptest=scenariotest.createNode(Thread_Local.get().getStepText());
-//       steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
-       //scenariotest.log(Status.PASS,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.GREEN));
+    public void getscen(PickleEventWrapper pickle , CucumberFeatureWrapper cf) throws Throwable {
+         globalpickle=pickle;
+         testing.runScenario(pickle.getPickleEvent());
 
   }
     /**
@@ -224,8 +203,7 @@ public class RunnerFile
      */
 
    @AfterClass
-    public void closeBrowser()
-   {
+    public void closeBrowser() {
        reports.flush();
        WebDriverInitialization.returnDriver().quit();
        Utility.desiredframe=false;

@@ -1,5 +1,16 @@
 package Webdriver_Support;
 
-public class Listeners {
+import org.testng.IExecutionListener;
 
+public class Listeners implements IExecutionListener {
+    @Override
+    public void onExecutionStart() {
+
+    }
+
+    @Override
+    public void onExecutionFinish() {
+        Utility.converToZip();
+        Utility.sendReportWithAttachment();
+    }
 }
