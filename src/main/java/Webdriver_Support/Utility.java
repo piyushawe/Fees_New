@@ -31,10 +31,16 @@ static public boolean desiredframe=false;
 static private Utility util;
 @FindBy(how=How.XPATH,using = "//iframe")
 private List<WebElement> frames;
+
+/**
+ *This block use to initialize pagefactory elements*/
 static
 {
    util=PageFactory.initElements(WebDriverInitialization.returnDriver(),Utility.class);
 }
+/**
+ *It provides the list of windows
+ * Also switch to the desired window*/
    static public void getwindow()
     {
       ArrayList window=new ArrayList<>(WebDriverInitialization.returnDriver().getWindowHandles());
@@ -57,6 +63,10 @@ static
     {
 
     }
+    /**
+     * @param Filename Provides property file path
+     * @param keyname  Provides key whose value has to be fetch
+     * This method will read and return desired key value*/
     static public StringBuilder propertyfilereader(String Filename, StringBuilder keyname)
     {
         StringBuilder value=null;
@@ -73,6 +83,9 @@ static
        }
        return value;
     }
+    /**
+     * @param framename Provides desired frame name
+     * This method will provide desired frame name and switch to it*/
     static public void getdesiredframe(StringBuilder framename)
     {
         Iterator it=util.frames.iterator();
@@ -88,6 +101,8 @@ static
          }
      }
     }
+    /**
+     * This method use to zip the file*/
     static public void converToZip()
     {
         System.out.println("zip");
@@ -108,6 +123,9 @@ static
        LoggerClass.log_error.error(ExceptionUtils.getStackTrace(e));
      }
     }
+
+    /**
+     * This method use to send the mail with attachment*/
     static public void sendReportWithAttachment()
     {
             // Create object of Property file

@@ -7,7 +7,8 @@ public class Listeners implements IExecutionListener {
     public void onExecutionStart() {
 
     }
-
+/**
+ *This method invoke just before JVM closing and it zip the file and send to intended users with attachments */
     @Override
     public void onExecutionFinish() {
         Utility.converToZip();
