@@ -47,6 +47,8 @@ import static Webdriver_Support.Locators.messagefilepath;
                 },
         monochrome = true
 )
+/**
+ * Listener is use to zip and mail the report */
 @Listeners(Webdriver_Support.Listeners.class)
 public class RunnerFile
 {
@@ -80,40 +82,64 @@ public class RunnerFile
     private static Boolean flag=true;
     private static StringBuilder duplicatefeaturename;
     private static PickleEventWrapper globalpickle;
+    /**
+     * @param scenario  this parameter will get scenario on every scenario execution
+     * <br>
+     * This @Before will execute before every scenario and get the name of the same
+     * <br>
+     * It also provide all feature name and create test(Extent Report_V3) for different scenario
+     * <br>
+     * It also create node for each scenario
+     * <br>
+     * It also club all scenario of same feature in one test*/
     @Before
     public void getScenario(Scenario scenario)
     {
         LoggerClass.log_info.debug("Currently getting scenario name");
         sct=new StringBuilder(scenario.getName());
-        StringBuilder featurname=new StringBuilder(globalpickle.getPickleEvent().uri);
-        featurname=new StringBuilder(featurname.toString().substring(featurname.lastIndexOf("/")+1,featurname.indexOf(".feature")));
+        StringBuilder featurename=new StringBuilder(globalpickle.getPickleEvent().uri);
+        featurename=new StringBuilder(featurename.toString().substring(featurename.lastIndexOf("/")+1,featurename.indexOf(".feature")));
         if(flag)
         {
-            duplicatefeaturename=featurname;
+            duplicatefeaturename=featurename;
             flag=false;
-            logger = reports.createTest(featurname.toString());
+            logger = reports.createTest(featurename.toString());
         }
-        if(!(featurname.toString().equalsIgnoreCase(duplicatefeaturename.toString())))
+        if(!(featurename.toString().equalsIgnoreCase(duplicatefeaturename.toString())))
         {
-            duplicatefeaturename=featurname;
-            logger = reports.createTest(featurname.toString());
+            duplicatefeaturename=featurename;
+            logger = reports.createTest(featurename.toString());
         }
         scenariotest=logger.createNode(sct.toString());
     }
+    /**
+     *This annotation will execute after every step in feature file including background steps
+     * <br>
+     * It will create node for each step executed of a scenario */
     @AfterStep
     public void beforeStep()
     {
         steptest=scenariotest.createNode(Thread_Local.get().getStepText());
         steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
-        System.out.println("Stepssssss");
     }
+    /**
+     * @param browser will tell on which browser execution going to happen
+     * <br>
+     * This annotation will execute every time, doesn't depend on group because of alwaysRun=true */
     @Parameters("browser")
     @BeforeClass(alwaysRun = true)
     public void getTheBroswer(String browser)
    {
        WebDriverInitialization.initializedriver(browser);
    }
-
+/**
+ * @param url will get provide the url for testing
+ * <br>
+ * @param username will provide username for the url
+ * <br>
+ * @param password will provide password for the url
+ * <br>
+ * This annotation will execute every time, doesn't depend on group because of alwaysRun=true */
    @Parameters({"url","username","password"})
    @BeforeClass(alwaysRun = true)
    public void getcredential(String url,String username,String password)
@@ -123,7 +149,12 @@ public class RunnerFile
        global_password=password;
 
    }
-
+/**
+ * Here we have initialized pagefactory elements
+ * <br>
+ * It go to url, enter username and password,click login button,go to fees
+ * <br>
+ * This annotation will execute every time, doesn't depend on group because of alwaysRun=true*/
    @BeforeClass(alwaysRun = true)
    public void openDesiredModule()
    {
@@ -164,11 +195,15 @@ public class RunnerFile
                System.exit(-2);
            }
    }
-
+/**
+ *This annotation will execute every time, doesn't depend on group because of alwaysRun=true
+ * <br>
+ *Here we initialize TestNGCucumberRunner,ExtentHtmlReporter,ExtentReports
+ * <br>
+ *Here set the environment info,also set the reports properties like documenttitle,reportname etc.  */
    @BeforeClass(alwaysRun=true)
    public void before()
    {
-       System.out.println("This is Beforeclass");
        testing=new TestNGCucumberRunner(this.getClass());
        htmlReporter =new ExtentHtmlReporter(System.getProperty("user.dir")+"/reports/Test.html");
        reports=new ExtentReports();
@@ -182,32 +217,34 @@ public class RunnerFile
        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
        htmlReporter.config().setTheme(Theme.STANDARD);
    }
-
+/**
+ * This dataprovider provides list of scenarios */
    @DataProvider(name="getscenario")
     public Object[][] getdata()
    {
        return testing.provideScenarios();
    }
-
+/**
+ *Ths test method will execute each scenario it receives from dataprovider
+ * <br>
+ *The only purpose of PickleEventWrapper,CucumberFeatureWrapper interface are to be able to provide a custom toString()  */
    @Test(dataProvider = "getscenario")
     public void getscen(PickleEventWrapper pickle , CucumberFeatureWrapper cf) throws Throwable {
          globalpickle=pickle;
          testing.runScenario(pickle.getPickleEvent());
-
   }
     /**
      * Need to close window as for different test in testng.xml there is no need of previous windows and for parallel testing
      *      if i don't close window then getWindowsHandles method will might provide undesired output
      *<br>
-     * desiredwindow flag is set to false to make sure for every test in testng.xml reset to default flag status
+     * flush() method of ExtentReports class is use to write all information of test to html reporter and it print after executing all @Test
+     * execution
      */
 
    @AfterClass
     public void closeBrowser() {
        reports.flush();
-       System.out.println("flush");
        WebDriverInitialization.returnDriver().quit();
-       Utility.desiredframe=false;
    }
 
 

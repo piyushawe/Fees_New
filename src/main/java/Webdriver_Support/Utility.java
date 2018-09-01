@@ -99,7 +99,7 @@ static
          zos.putNextEntry(ze);
          byte[] buffer= Files.readAllBytes(Paths.get(System.getProperty("user.dir")+"/reports/Test.html"));
 
-          zos.write(buffer,0,buffer.length);
+         zos.write(buffer,0,buffer.length);
          zos.closeEntry();
          zos.close();
 
