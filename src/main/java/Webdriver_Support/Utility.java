@@ -105,7 +105,6 @@ static
      * This method use to zip the file*/
     static public void converToZip()
     {
-        System.out.println("zip");
      try(FileOutputStream fo=new FileOutputStream(System.getProperty("user.dir")+"/reports/MyZip.zip");
          FileInputStream fi=new FileInputStream(System.getProperty("user.dir")+"/reports/Test.html"))
      {
