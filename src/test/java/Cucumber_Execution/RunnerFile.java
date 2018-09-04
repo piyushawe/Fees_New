@@ -17,6 +17,7 @@ import cucumber.api.java.Before;
 import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.PickleEventWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
+import net.thucydides.core.annotations.Step;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -119,7 +120,26 @@ public class RunnerFile
     @AfterStep
     public void afterStep()
     {
-        steptest=scenariotest.createNode(Thread_Local.get().getStepText());
+
+        scenariotest.log(Status.PASS,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.GREEN));
+//         Custom_Formatter.getStatus();
+//         if(Custom_Formatter.passed)
+//        {
+//            scenariotest.log(Status.PASS,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.GREEN));
+//            Custom_Formatter.passed=false;
+//        }
+//        if(Custom_Formatter.failed)
+//        {
+//            scenariotest.log(Status.FAIL,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.RED));
+//            Custom_Formatter.failed=false;
+//        }
+//        if(Custom_Formatter.skip)
+//        {
+//           scenariotest.log(Status.SKIP,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.YELLOW));
+//           Custom_Formatter.skip=false;
+//        }
+//        steptest=scenariotest.createNode(Thread_Local.get().getStepText());
+//        steptest.getStatus();
         //steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
     }
     /**

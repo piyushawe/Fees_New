@@ -1,30 +1,56 @@
 package Cucumber_Execution;
 
+import Log4jpackage.LoggerClass;
 import cucumber.api.PickleStepTestStep;
-import cucumber.api.event.EventHandler;
-import cucumber.api.event.EventPublisher;
-import cucumber.api.event.TestStepStarted;
+import cucumber.api.Result;
+import cucumber.api.event.*;
 import cucumber.api.formatter.Formatter;
 
-import java.util.ArrayList;
 
 public class Custom_Formatter implements Formatter {
-   public static ArrayList<String> stepnames=new ArrayList<String>();
-
+    private static Result result;
+    static Boolean failed=false;
+    static Boolean passed=false;
+    static Boolean skip=false;
 
         public Custom_Formatter() {}
 
-        private EventHandler<TestStepStarted> stepStartedHandler = new EventHandler<TestStepStarted>() {
+        private EventHandler<TestStepStarted> stepStartedHandler = new EventHandler<TestStepStarted>(){
             @Override
             public void receive(TestStepStarted event) {
                 handleTestStepStarted(event);
                 //stepnames=Thread_Local.get().getStepText();
+
             }
         };
-
+    private final EventHandler<TestCaseFinished> testCaseFinishedHandler = new EventHandler<TestCaseFinished>() {
+        @Override
+        public void receive(TestCaseFinished event) {
+            receiveResult(event.result);
+        }
+    };
+    void receiveResult(Result result) {
+        this.result = result;
+    }
+    public static void getStatus()
+    {
+        switch (result.getStatus())
+        {
+            case FAILED: failed=true;
+            break;
+            case PASSED: passed=true;
+            break;
+            case SKIPPED: skip=true;
+            break;
+            default:
+                LoggerClass.log_info.debug("Nothing to set");
+        }
+    }
         @Override
         public void setEventPublisher(EventPublisher publisher) {
+            publisher.registerHandlerFor(TestCaseFinished.class, testCaseFinishedHandler);
             publisher.registerHandlerFor(TestStepStarted.class, stepStartedHandler);
+
         }
 
         private void handleTestStepStarted(TestStepStarted event) {

@@ -19,9 +19,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 
 public class Step_Def implements Locators {
+    public static SoftAssert sc=new SoftAssert();
     @FindBy(how=How.XPATH,using = "//ul[@id='side-menu']")
     private WebElement navigationleftpanel;
 
@@ -64,7 +66,8 @@ public class Step_Def implements Locators {
     @Given("^open tools qa$")
     public void open_tools_qa() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        Assert.assertEquals(1,2);
+        //sc.assertEquals(1,2);
+        //Assert.assertEquals(1,2);
         System.out.println("This is chrome");
     }
     @When("^openji$")
