@@ -110,17 +110,17 @@ public class RunnerFile
             duplicatefeaturename=featurename;
             logger = reports.createTest(featurename.toString());
         }
-        scenariotest=logger.createNode(sct.toString());
+            scenariotest=logger.createNode(sct.toString());
     }
     /**
      *This annotation will execute after every step in feature file including background steps
      * <br>
      * It will create node for each step executed of a scenario */
     @AfterStep
-    public void beforeStep()
+    public void afterStep()
     {
         steptest=scenariotest.createNode(Thread_Local.get().getStepText());
-        steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
+        //steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
     }
     /**
      * @param browser will tell on which browser execution going to happen
@@ -200,7 +200,7 @@ public class RunnerFile
  * <br>
  *Here we initialize TestNGCucumberRunner,ExtentHtmlReporter,ExtentReports
  * <br>
- *Here set the environment info,also set the reports properties like documenttitle,reportname etc.  */
+ *Here set the environment info,also set the reports properties like documenttitle,reportname etc.*/
    @BeforeClass(alwaysRun=true)
    public void before()
    {
