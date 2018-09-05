@@ -11,7 +11,9 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import cucumber.api.CucumberOptions;
+import cucumber.api.Result;
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.AfterStep;
 import cucumber.api.java.Before;
 import cucumber.api.testng.CucumberFeatureWrapper;
@@ -118,29 +120,35 @@ public class RunnerFile
      * <br>
      * It will create node for each step executed of a scenario */
     @AfterStep
-    public void afterStep()
+    public void afterStep(Scenario scenario)
     {
-
-        scenariotest.log(Status.PASS,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.GREEN));
-//         Custom_Formatter.getStatus();
-//         if(Custom_Formatter.passed)
-//        {
-//            scenariotest.log(Status.PASS,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.GREEN));
-//            Custom_Formatter.passed=false;
-//        }
-//        if(Custom_Formatter.failed)
-//        {
-//            scenariotest.log(Status.FAIL,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.RED));
-//            Custom_Formatter.failed=false;
-//        }
-//        if(Custom_Formatter.skip)
-//        {
-//           scenariotest.log(Status.SKIP,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.YELLOW));
-//           Custom_Formatter.skip=false;
-//        }
-//        steptest=scenariotest.createNode(Thread_Local.get().getStepText());
-//        steptest.getStatus();
+        System.out.println(scenario.getStatus());
+       // scenariotest.log(Status.PASS,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.GREEN));
+        //Thread_Local.get().
+         String status=scenario.getStatus().toString();
+         if(status.equalsIgnoreCase("passed"))
+        {
+            scenariotest.log(Status.PASS,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.GREEN));
+        }
+        if(status.equalsIgnoreCase("failed"))
+        {
+            scenariotest.log(Status.FAIL,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.RED));
+        }
+        if(status.equalsIgnoreCase("skipped"))
+        {
+           scenariotest.log(Status.SKIP,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.YELLOW));
+        }
+        //steptest=scenariotest.createNode(Thread_Local.get().getStepText());
+       // steptest.getStatus();
         //steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
+    }
+    @After
+    public void getStatus(Scenario scenario)
+    {
+//        if(scenario.isFailed())
+//        {
+//            scenariotest.fail(MarkupHelper.createLabel("scenario failed",ExtentColor.RED));
+//        }
     }
     /**
      * @param browser will tell on which browser execution going to happen

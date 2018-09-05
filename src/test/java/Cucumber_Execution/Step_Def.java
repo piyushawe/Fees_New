@@ -67,7 +67,7 @@ public class Step_Def implements Locators {
     public void open_tools_qa() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         //sc.assertEquals(1,2);
-        //Assert.assertEquals(1,2);
+        Assert.assertEquals(1,2);
         System.out.println("This is chrome");
     }
     @When("^openji$")
