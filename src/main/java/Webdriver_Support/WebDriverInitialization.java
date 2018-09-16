@@ -7,8 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 /**
  * Singelton class */
 public class WebDriverInitialization {

@@ -1,8 +1,6 @@
 package Cucumber_Execution;
 
-import Log4jpackage.LoggerClass;
 import cucumber.api.PickleStepTestStep;
-import cucumber.api.Result;
 import cucumber.api.event.*;
 import cucumber.api.formatter.Formatter;
 
