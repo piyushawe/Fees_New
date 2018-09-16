@@ -125,22 +125,24 @@ public class RunnerFile
         System.out.println(scenario.getStatus());
        // scenariotest.log(Status.PASS,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.GREEN));
         //Thread_Local.get().
-         String status=scenario.getStatus().toString();
-         if(status.equalsIgnoreCase("passed"))
+         //String status=scenario.getStatus().toString();
+         if(Step_Def.stepstatus.equalsIgnoreCase("passed"))
         {
             scenariotest.log(Status.PASS,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.GREEN));
         }
-        if(status.equalsIgnoreCase("failed"))
+        if(Step_Def.stepstatus.equalsIgnoreCase("failed"))
         {
             scenariotest.log(Status.FAIL,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.RED));
+            scenariotest.createNode(Thread_Local.get().getStepText(),Step_Def.exception);
         }
-        if(status.equalsIgnoreCase("skipped"))
+        if(Step_Def.stepstatus.equalsIgnoreCase("skipped"))
         {
            scenariotest.log(Status.SKIP,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.YELLOW));
         }
         //steptest=scenariotest.createNode(Thread_Local.get().getStepText());
        // steptest.getStatus();
         //steptest.log(Status.PASS, MarkupHelper.createLabel(Thread_Local.get().getStepText(), ExtentColor.GREEN));
+        Step_Def.stepstatus="passed";
     }
     @After
     public void getStatus(Scenario scenario)

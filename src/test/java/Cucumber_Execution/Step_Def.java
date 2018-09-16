@@ -23,6 +23,8 @@ import org.testng.asserts.SoftAssert;
 
 
 public class Step_Def implements Locators {
+    static public String stepstatus="passed";
+    static public String exception;
     public static SoftAssert sc=new SoftAssert();
     @FindBy(how=How.XPATH,using = "//ul[@id='side-menu']")
     private WebElement navigationleftpanel;
@@ -67,7 +69,12 @@ public class Step_Def implements Locators {
     public void open_tools_qa() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         //sc.assertEquals(1,2);
-        Assert.assertEquals(1,2);
+        try{Assert.assertEquals(1,2);}
+        catch (AssertionError e)
+        {
+            stepstatus="failed";
+            exception=ExceptionUtils.getStackTrace(e);
+        }
         System.out.println("This is chrome");
     }
     @When("^openji$")

@@ -14,6 +14,6 @@ public class Listeners implements IExecutionListener {
     public void onExecutionFinish() {
       //  Utility.converToZip();
        // Utility.sendReportWithAttachment();
-        Step_Def.sc.assertAll();
+       // Step_Def.sc.assertAll();
     }
 }
