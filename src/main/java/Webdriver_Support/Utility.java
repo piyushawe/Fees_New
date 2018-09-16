@@ -147,7 +147,7 @@ static
 
                     protected PasswordAuthentication getPasswordAuthentication() {
 
-                        return new PasswordAuthentication("piyush.nautiyal@franciscansolutions.in", "123456789");
+                        return new PasswordAuthentication("piyushnautiyal153@gmail.com", "Piyushnisha28#");
 
                     }
 
@@ -159,10 +159,10 @@ static
             Message message = new MimeMessage(session);
 
             // Set the from address
-            message.setFrom(new InternetAddress("piyush.nautiyal@franciscansolutions.in"));
+            message.setFrom(new InternetAddress("piyushnautiyal153@gmail.com"));
 
             // Set the recipient address
-            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse("piyush.nautiyal@franciscansolutions.in"));
+            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse("piyushnautiyal153@yahoo.com"));
 
             // Add the subject link
             message.setSubject("Testing Subject");

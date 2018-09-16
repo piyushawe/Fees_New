@@ -11,8 +11,8 @@ public class Listeners implements IExecutionListener {
  *This method invoke just before JVM closing and it zip the file and send to intended users with attachments */
     @Override
     public void onExecutionFinish() {
-      //  Utility.converToZip();
-       // Utility.sendReportWithAttachment();
+        Utility.converToZip();
+        Utility.sendReportWithAttachment();
        // Step_Def.sc.assertAll();
     }
 }
