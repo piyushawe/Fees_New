@@ -15,7 +15,7 @@
          <parameter name="username" value="admin"/>
         <parameter name="password" value="Admin#franciscan"/>
         <classes>
-            <class name="Cucumber_Execution.RunnerFile"/>
+            <class name="RunnerFile"/>
         </classes>
     </test-->
 </suite>
