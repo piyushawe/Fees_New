@@ -180,7 +180,7 @@
           <version>2.20.1</version>
          <configuration>
 <suiteXmlFiles>
-  <suiteXmlFile>C:\\Users\\Piyush\\IdeaProjects\\Fees_New\\Testng.xml</suiteXmlFile>
+  <suiteXmlFile>Testng.xml</suiteXmlFile>
 </suiteXmlFiles>
           </configuration>
         </plugin>
