@@ -1,5 +1,6 @@
 package Cucumber_Execution;
 
+
 import Log4jpackage.LoggerClass;
 import Webdriver_Support.WebDriverInitialization;
 import Webdriver_Support.Utility;
@@ -11,7 +12,6 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import cucumber.api.CucumberOptions;
-import cucumber.api.Result;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.AfterStep;
@@ -19,7 +19,6 @@ import cucumber.api.java.Before;
 import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.PickleEventWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
-import net.thucydides.core.annotations.Step;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
