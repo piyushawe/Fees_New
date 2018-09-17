@@ -2,6 +2,7 @@ package Cucumber_Execution;
 
 
 import Log4jpackage.LoggerClass;
+import Webdriver_Support.Locators;
 import Webdriver_Support.WebDriverInitialization;
 import Webdriver_Support.Utility;
 import Webdriver_Support.WebDriverMethods;
@@ -191,11 +192,11 @@ public class RunnerFile
        sd= PageFactory.initElements(WebDriverInitialization.returnDriver(),RunnerFile.class);
        LoggerClass.log_info.debug("Currently is Background");
        WebDriverMethods.gotToUrl(global_url);
-       WebDriverMethods.pageLoad(Utility.propertyfilereader(messagefilepath,new StringBuilder("login_title")));
+       WebDriverMethods.pageLoad(Utility.propertyfilereader(Locators.messagefilepath,new StringBuilder("login_title")));
        try {
            WebDriverMethods.sendText(sd.username, new StringBuilder(global_username));
        } catch (TimeoutException e) {
-           LoggerClass.log_info.debug(Utility.propertyfilereader(messagefilepath, new StringBuilder("pageloadingmessage")));
+           LoggerClass.log_info.debug(Utility.propertyfilereader(Locators.messagefilepath, new StringBuilder("pageloadingmessage")));
            LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
            WebDriverInitialization.returnDriver().quit();
            System.exit(-2);
