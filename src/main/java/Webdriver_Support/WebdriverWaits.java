@@ -16,7 +16,7 @@ public class WebdriverWaits {
       wait  =new WebDriverWait(WebDriverInitialization.returnDriver(),10);
     }
     /**
-     * This method use to check visibility of element, will check only if element visible or not in DOM   */
+     * This hmethod use to check visibility of element, will check only if element visible or not in DOM   */
     static public void explicitWait_visbilityCheck(WebElement element)
     {
      try{   wait.until(ExpectedConditions.visibilityOf(element));
