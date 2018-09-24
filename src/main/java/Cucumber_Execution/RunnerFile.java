@@ -71,9 +71,9 @@ public class RunnerFile
     @CacheLookup
     private WebElement feesbutton;
 
-    public static String global_url;
-    public static String global_username;
-    public static String global_password;
+    public  String global_url;
+    public  String global_username;
+    public  String global_password;
     private TestNGCucumberRunner testing;
     private static ExtentHtmlReporter htmlReporter;
     private static ExtentReports reports;
@@ -133,7 +133,6 @@ public class RunnerFile
         if(Step_Def.stepstatus.equalsIgnoreCase("failed"))
         {
             scenariotest.log(Status.FAIL,MarkupHelper.createLabel(Thread_Local.get().getStepText(),ExtentColor.RED));
-            scenariotest.createNode(Thread_Local.get().getStepText(),Step_Def.exception);
         }
         if(Step_Def.stepstatus.equalsIgnoreCase("skipped"))
         {
@@ -158,7 +157,7 @@ public class RunnerFile
      * This annotation will execute every time, doesn't depend on group because of alwaysRun=true */
     @Parameters("browser")
     @BeforeClass(alwaysRun = true)
-    public void getTheBroswer(String browser)
+    public void getTheBroswer(@Optional("chrome") String browser)
    {
        WebDriverInitialization.initializedriver(browser);
    }

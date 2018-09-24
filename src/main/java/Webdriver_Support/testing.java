@@ -8,6 +8,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -19,28 +22,34 @@ import java.util.Map;
 
 public class testing {
     public static void main(String[] args) throws InterruptedException, AWTException, IOException {
-        List list=new ArrayList();
-        list.add(10);
-        list.add(10);
-
-        /*WebDriver web;
+//        List list=new ArrayList();
+//        list.add(10);
+//        list.add(10);
+        WebDriver web;
         System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver.exe");
         web = new ChromeDriver();
         web.manage().window().maximize();
-        web.navigate().to("http://qaerp.franciscanecare.net/Secure/default.aspx");
-        web.findElement(By.id("txtUserName")).sendKeys("admin");
-        web.findElement(By.id("txtPassword")).sendKeys("Admin#franciscan");
-        web.findElement(By.id("btnLogin")).click();
-        web.findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
+        web.navigate().to("https://www.jquery-az.com/boots/demo.php?ex=63.0_2");
+        web.findElement(By.xpath("//button[@type='button']")).click();
+JavascriptExecutor js =(JavascriptExecutor)web;
+js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+//        Robot rb=new Robot();
+//        rb.keyPress(KeyEvent.VK_ENTER);
+        //web.findElement(By.id("txtUserName")).sendKeys("admin");
+//        JavascriptExecutor ja=(JavascriptExecutor)web;
+//        ja.executeScript("document.getElementById('txtUserName').value='admin'");
+//        web.findElement(By.id("txtPassword")).sendKeys("Admin#franciscan");
+//        web.findElement(By.id("btnLogin")).click();
+//        web.findElement(By.xpath("//a[@href='/FeeManagement/Default.aspx']")).click();
         //web.close();
         //web.close();
         // web.quit();
-        JavascriptExecutor js = (JavascriptExecutor) web;
-        js.executeAsyncScript("alert('hello');");
-        Thread.sleep(5000);
-        //web.switchTo().alert().accept();
-        Robot r = new Robot();
-        r.keyPress(KeyEvent.VK_ENTER);*/
+//        JavascriptExecutor js = (JavascriptExecutor) web;
+//        js.executeAsyncScript("alert('hello');");
+//        Thread.sleep(5000);
+//        //web.switchTo().alert().accept();
+//        Robot r = new Robot();
+//        r.keyPress(KeyEvent.VK_ENTER);
         // FileInputStream fl = new FileInputStream("E:\\testingdatahashmap.xlsx");
         //FileInputStream fw=new FileInputStream("E:\\testingwrite.xlsx");
         //Workbook ww=new XSSFWorkbook(fw);

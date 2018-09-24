@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Testing" verbose="1"  group-by-instances="true" >
+<suite name="Testing" verbose="1"  group-by-instances="true" parallel="tests" >
     <test name="test">
         <parameter name="browser" value="chrome"/>
         <parameter name="url" value="http://qaerp.franciscanecare.net/Secure/default.aspx"/>
@@ -9,13 +9,13 @@
             <class name="Cucumber_Execution.RunnerFile"/>
         </classes>
     </test>
-    <!--test name="test_firefox">
-        <parameter name="browser" value="firefox"/>
+    <test name="test_firefox">
+        <parameter name="browser" value="chrome"/>
         <parameter name="url" value="http://qaerp.franciscanecare.net/Secure/default.aspx"/>
-         <parameter name="username" value="admin"/>
+        <parameter name="username" value="admin"/>
         <parameter name="password" value="Admin#franciscan"/>
         <classes>
-            <class name="RunnerFile"/>
+            <class name="Cucumber_Execution.RunnerFile"/>
         </classes>
-    </test-->
+    </test>
 </suite>
