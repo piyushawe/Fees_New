@@ -13,7 +13,7 @@ public class WebdriverWaits {
    /**
     * This static block use to WebDriverWait class */
     static {
-      wait  =new WebDriverWait(WebDriverInitialization.returnDriver(),10);
+      wait  =new WebDriverWait(WebDriverInitialization.returnInstance().returnDriver(),10);
     }
     /**
      * This method use to check visibility of element, will check only if element visible or not in DOM   */

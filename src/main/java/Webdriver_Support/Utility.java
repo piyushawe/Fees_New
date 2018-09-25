@@ -36,19 +36,19 @@ private List<WebElement> frames;
  *This block use to initialize pagefactory elements*/
 static
 {
-   util=PageFactory.initElements(WebDriverInitialization.returnDriver(),Utility.class);
+   util=PageFactory.initElements(WebDriverInitialization.returnInstance().returnDriver(),Utility.class);
 }
 /**
  *It provides the list of windows
  * Also switch to the desired window*/
    static public void getwindow()
     {
-      ArrayList window=new ArrayList<>(WebDriverInitialization.returnDriver().getWindowHandles());
+      ArrayList window=new ArrayList<>(WebDriverInitialization.returnInstance().returnDriver().getWindowHandles());
         Iterator it =window.iterator();
         while(it.hasNext())
         {
             String s=(String)it.next();
-            if(WebDriverInitialization.returnDriver().switchTo().window(s).getTitle().equalsIgnoreCase("Fees"))
+            if(WebDriverInitialization.returnInstance().returnDriver().switchTo().window(s).getTitle().equalsIgnoreCase("Fees"))
             {
                 break;
             }
@@ -95,7 +95,7 @@ static
          //System.out.println(element.getAttribute("name "));
          if(element.getAttribute("name").equalsIgnoreCase(framename.toString()))
          {
-             WebDriverInitialization.returnDriver().switchTo().frame(element);
+             WebDriverInitialization.returnInstance().returnDriver().switchTo().frame(element);
              desiredframe=true;
              break;
          }

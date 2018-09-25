@@ -12,13 +12,13 @@ public class WebDriverMethods implements Locators {
      *This method use to maximize window*/
 static public void maximizeWindow()
 {
-    WebDriverInitialization.returnDriver().manage().window().maximize();
+    WebDriverInitialization.returnInstance().returnDriver().manage().window().maximize();
 }
 /**
  *This method use to navigate to url */
 static public void gotToUrl(String url)
 {
-    WebDriverInitialization.returnDriver().navigate().to(url);
+    WebDriverInitialization.returnInstance().returnDriver().navigate().to(url);
 }
 /**
  * This method to enter text to text box */
@@ -39,12 +39,12 @@ static public void click(WebElement element) throws NoSuchElementException
 static public void pageLoad(StringBuilder title)
 {
         WebdriverWaits.explicitWait_CheckTitle(title);
-        WebDriverInitialization.returnDriver().manage().timeouts().pageLoadTimeout(120, TimeUnit.SECONDS);
+        WebDriverInitialization.returnInstance().returnDriver().manage().timeouts().pageLoadTimeout(120, TimeUnit.SECONDS);
 }
 /**
  *This method use to perform click operation on element using mouse hover  */
 static public void  action_MoveToElement_Click(WebElement element, Boolean flag) {
-    Actions ac = new Actions(WebDriverInitialization.returnDriver());
+    Actions ac = new Actions(WebDriverInitialization.returnInstance().returnDriver());
     if (flag) {
         ac.moveToElement(element).click().build().perform();
     } else {

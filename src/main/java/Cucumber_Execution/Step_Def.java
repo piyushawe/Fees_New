@@ -32,7 +32,7 @@ public class Step_Def implements Locators {
     private static Step_Def sd;
     static
     {
-        sd=PageFactory.initElements(WebDriverInitialization.returnDriver(),Step_Def.class);
+        sd=PageFactory.initElements(WebDriverInitialization.returnInstance().returnDriver(),Step_Def.class);
 
     }
     /**
@@ -74,7 +74,7 @@ public class Step_Def implements Locators {
     @When("^openji$")
     public void openji() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        //WebDriverInitialization.returnDriver().findElement(By.)
+        //WebDriverInitialization.returnInstance().returnDriver().findElement(By.)
     }
     @Given("^do testing$")
     public void do_testing() throws Throwable {

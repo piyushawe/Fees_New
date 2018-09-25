@@ -10,16 +10,21 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 /**
  * Singelton class */
 public class WebDriverInitialization {
-    private static WebDriver web;
+    private  WebDriver web;
+    private static WebDriverInitialization instance=new WebDriverInitialization();
 /**
  * Private constructor to restrict outside object creation and allows to create single object*/
     private WebDriverInitialization() {
+    }
+    static public WebDriverInitialization returnInstance()
+    {
+        return instance;
     }
 /**
  *@param Browser Tells on which browser execution will takes place,and initialize corresponding browser driver
  *This method instructs which lo4j.xml to use for logging the log
  * */
-    static public void initializedriver(String Browser) {
+     public void initializedriver(String Browser) {
         DOMConfigurator.configure("Log4j.xml");
         switch (Browser.toLowerCase()) {
             case "chrome": {
@@ -55,7 +60,7 @@ public class WebDriverInitialization {
         }
     }
     /**This method use to get the webdriver reference and this same reference will use in whole project */
-        static public WebDriver returnDriver()
+         public WebDriver returnDriver()
         {
             return web;
         }

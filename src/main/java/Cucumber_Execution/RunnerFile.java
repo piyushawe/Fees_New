@@ -31,7 +31,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.*;
 
 
-import static Webdriver_Support.Locators.messagefilepath;
 
 
 /**
@@ -159,7 +158,7 @@ public class RunnerFile
     @BeforeClass(alwaysRun = true)
     public void getTheBroswer(@Optional("chrome") String browser)
    {
-       WebDriverInitialization.initializedriver(browser);
+       WebDriverInitialization.returnInstance().initializedriver(browser);
    }
 /**
  * @param url will get provide the url for testing
@@ -171,7 +170,8 @@ public class RunnerFile
  * This annotation will execute every time, doesn't depend on group because of alwaysRun=true */
    @Parameters({"url","username","password"})
    @BeforeClass(alwaysRun = true)
-   public void getcredential(String url,String username,String password)
+   public void getcredential(@Optional("http://qaerp.franciscanecare.net/Secure/default.aspx") String url,
+                             @Optional("admin") String username,@Optional("Admin#franciscan") String password)
    {
        global_url=url;
        global_username=username;
@@ -188,7 +188,7 @@ public class RunnerFile
    public void openDesiredModule()
    {
        System.out.println("Opening desired module");
-       sd= PageFactory.initElements(WebDriverInitialization.returnDriver(),RunnerFile.class);
+       sd= PageFactory.initElements(WebDriverInitialization.returnInstance().returnDriver(),RunnerFile.class);
        LoggerClass.log_info.debug("Currently is Background");
        WebDriverMethods.gotToUrl(global_url);
        WebDriverMethods.pageLoad(Utility.propertyfilereader(Locators.messagefilepath,new StringBuilder("login_title")));
@@ -197,22 +197,22 @@ public class RunnerFile
        } catch (TimeoutException e) {
            LoggerClass.log_info.debug(Utility.propertyfilereader(Locators.messagefilepath, new StringBuilder("pageloadingmessage")));
            LoggerClass.log_error.fatal(ExceptionUtils.getStackTrace(e));
-           WebDriverInitialization.returnDriver().quit();
+           WebDriverInitialization.returnInstance().returnDriver().quit();
            System.exit(-2);
        } catch (NoSuchElementException e) {
-           WebDriverInitialization.returnDriver().quit();
+           WebDriverInitialization.returnInstance().returnDriver().quit();
            System.exit(-2);
        }
        try {
            WebDriverMethods.sendText(sd.password, new StringBuilder(global_password));
        } catch (NoSuchElementException e) {
-           WebDriverInitialization.returnDriver().quit();
+           WebDriverInitialization.returnInstance().returnDriver().quit();
            System.exit(-2);
        }
        try {
            WebDriverMethods.click(sd.loginbutton);
        } catch (NoSuchElementException e) {
-           WebDriverInitialization.returnDriver().quit();
+           WebDriverInitialization.returnInstance().returnDriver().quit();
            System.exit(-2);
        }
            try {
@@ -220,7 +220,7 @@ public class RunnerFile
            }
            catch (NoSuchElementException e)
            {
-               WebDriverInitialization.returnDriver().quit();
+               WebDriverInitialization.returnInstance().returnDriver().quit();
                System.exit(-2);
            }
    }
@@ -273,7 +273,7 @@ public class RunnerFile
    @AfterClass
     public void closeBrowser() {
        reports.flush();
-       WebDriverInitialization.returnDriver().quit();
+       WebDriverInitialization.returnInstance().returnDriver().quit();
    }
 
 
