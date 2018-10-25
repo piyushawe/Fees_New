@@ -2,6 +2,10 @@ package Webdriver_Support;
 
 
 
+import com.aventstack.extentreports.Status;
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
@@ -11,28 +15,111 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class testing {
-    public static void main(String[] args) throws InterruptedException, AWTException, IOException {
+    static WebDriver driver=null;
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"\\Drivers\\chromedriver.exe");
+        driver=new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://siteportalstg.medavante.net");
+        driver.findElement(By.id("WebLogin_UserName")).sendKeys("AT_Test3");
+        driver.findElement(By.id("Password")).sendKeys("#tester5");
+        driver.findElement(By.id("WebLogin_Login")).click();
+        driver.findElement(By.xpath("//span[@class='dashboard-tile-name' and text()='Central Ratings']")).click();
+
+}
+//    ExtentReports extentReports=null;
+//    //ExtentHtmlReporter extentHtmlReporter=null;
+//    WebDriver driver=null;
+//    ExtentTest extentTest=null;
+//    ExtentTest extentTest1=null;
+//    StringBuilder stringBuilder=new StringBuilder();
+//    @BeforeMethod
+//    public void before(Method method)
+//    {
+//        extentReports=new ExtentReports("E:\\Reports.html",false);
+//        extentTest=extentReports.startTest(method.getName());
+////        extentReports.attachReporter(extentHtmlReporter);
+////        extentTest=extentReports.createTest(method.getName());
+//    }
+//    @BeforeClass
+//    public void beforeclass()
+//    {
+//        System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"\\Drivers\\chromedriver.exe");
+//        driver=new ChromeDriver();
+//        driver.manage().window().maximize();
+//        driver.get("https://siteportalstg.medavante.net");
+////        extentHtmlReporter=new ExtentHtmlReporter("E:\\Reports.html");
+////        extentHtmlReporter.setAppendExisting(true);
+//    }
+//
+//@Test
+//    public void userLogin()
+//{
+//    extentTest.log(LogStatus.PASS,"Enter User Name");
+//    driver.findElement(By.id("WebLogin_UserName")).sendKeys("test_ci1");
+//    extentTest.log(LogStatus.PASS,"Password");
+//    driver.findElement(By.id("Password")).sendKeys("#2Pencil");
+//    extentTest.log(LogStatus.PASS,"Click On Login Button");
+//    driver.findElement(By.id("WebLogin_Login")).click();
+//}
+//
+//@Test
+//    public void userLogout()
+//{
+//    extentTest.log(LogStatus.PASS,"Click On Logout Button");
+//    driver.findElement(By.className("btn logout")).click();
+//}
+//
+//@AfterMethod
+//    public void after(ITestResult iTestResult)
+//{
+//    if(iTestResult.getStatus()==ITestResult.FAILURE)
+//    {
+//        extentTest.log(LogStatus.FAIL,"This Step is Failed");
+//    }
+//    extentReports.flush();
+//    extentReports=null;
+//}
+
+//    public static void main(String[] args) throws InterruptedException, AWTException, IOException {
+//       // String name="piyush";
+//        StringBuilder name=new StringBuilder("piyush");
+//        Thread.sleep(10000);
+//        for(int i=1;i<1000;i++)
+//        {
+//            System.out.println(name+"_"+i);
+//        }
 //        List list=new ArrayList();
 //        list.add(10);
 //        list.add(10);
-        WebDriver web;
-        System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver.exe");
-        web = new ChromeDriver();
-        web.manage().window().maximize();
-        web.navigate().to("https://www.jquery-az.com/boots/demo.php?ex=63.0_2");
-        web.findElement(By.xpath("//button[@type='button']")).click();
-JavascriptExecutor js =(JavascriptExecutor)web;
-js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+//        WebDriver web;
+//        System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver.exe");
+//        web = new ChromeDriver();
+//        web.manage().window().maximize();
+//        web.navigate().to("https://siteportalstg.medavante.net/admin#/manage/organizations/1929e8a8-3c55-41b8-aa9b-54b98171c6c9/general");
+//        web.findElement(By.id("WebLogin_UserName")).sendKeys("test_ci1");
+//        web.findElement(By.id("Password")).sendKeys("#2Pencil");
+//        web.findElement(By.id("WebLogin_Login")).click();
+
+     //   web.findElement(By.xpath("//button[@type='button']")).click();
+//JavascriptExecutor js =(JavascriptExecutor)web;
+//js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
 //        Robot rb=new Robot();
 //        rb.keyPress(KeyEvent.VK_ENTER);
         //web.findElement(By.id("txtUserName")).sendKeys("admin");
@@ -99,5 +186,5 @@ js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
         //System.out.println(outer);
 //        System.out.println(supermap);
 //    }
-    }
+  //  }
 }
